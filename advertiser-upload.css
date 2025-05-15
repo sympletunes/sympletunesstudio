@@ -1,0 +1,352 @@
+/* ============================================= */
+/* Advertiser Upload Page Styles                 */
+/* ============================================= */
+
+body.advertiser-upload-page {
+    background-color: var(--bg-secondary); /* Or keep primary */
+}
+
+.advertiser-hub-content {
+    padding-top: 100px; /* Space for header */
+}
+
+.advertiser-step {
+    display: none; /* Hide steps by default */
+    animation: fadeInStep 0.5s ease-out;
+}
+.advertiser-step.active-step {
+    display: block;
+}
+@keyframes fadeInStep { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+.step-container {
+    /* .glass-card applied in HTML */
+    max-width: 800px; /* Limit width of step containers */
+    margin: 0 auto;
+    padding: 2.5rem 3rem;
+}
+.step-icon {
+    color: var(--text-accent);
+    margin-bottom: 1.5rem;
+    display: block; /* Center icon */
+    text-align: center;
+}
+.step-icon.success-icon {
+    color: #198754; /* Green for success */
+}
+
+/* Terms Step */
+.terms-box {
+    background-color: rgba(var(--bg-primary-rgb, 13, 13, 18), 0.5); /* Darker box inside card */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 1.5rem;
+    margin: 2rem auto;
+    max-width: 600px;
+    text-align: left;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+.terms-box h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+.terms-box ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+.terms-box li {
+    margin-bottom: 0.5rem;
+}
+.terms-box a {
+    color: var(--text-accent);
+    text-decoration: underline;
+}
+.form-group.checkbox-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+.form-group.checkbox-group input[type="checkbox"] {
+    margin-right: 0.75rem;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    accent-color: var(--text-accent); /* Style checkbox color */
+}
+.form-group.checkbox-group label {
+    margin-bottom: 0; /* Override default form-group label margin */
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+#proceed-to-form-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--accent-secondary); /* Dim disabled button */
+}
+
+/* Metadata Form Step */
+.form-section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.form-section-title:first-of-type {
+    margin-top: 0;
+}
+.checkbox-group-multiple label { /* Label for the whole group */
+     display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+.checkbox-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+}
+.checkbox-options label { /* Individual checkbox label */
+    display: flex;
+    align-items: center;
+    background-color: rgba(var(--bg-primary-rgb, 13, 13, 18), 0.5);
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+.checkbox-options label:hover {
+    border-color: var(--text-accent);
+}
+.checkbox-options input[type="checkbox"] {
+    margin-right: 0.75rem;
+    accent-color: var(--text-accent);
+    width: 16px;
+    height: 16px;
+}
+
+/* Upload Step */
+.ad-format-requirements {
+    background-color: rgba(var(--accent-primary-rgb, 138, 79, 255), 0.1);
+    border: 1px solid var(--text-accent);
+    border-radius: var(--border-radius-md);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+}
+.ad-format-requirements h4 {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+.ad-format-requirements strong {
+    color: var(--text-accent);
+}
+.ad-format-requirements ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+    font-size: 0.9rem;
+}
+.ad-format-requirements li { margin-bottom: 0.3rem; }
+
+.large-dropzone { /* Specific styles for the ad dropzone */
+    padding: 3rem 2rem;
+    text-align: center;
+    border: 2px dashed var(--border-color);
+    background-color: rgba(var(--bg-primary-rgb, 13, 13, 18), 0.3);
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    margin-bottom: 1.5rem;
+}
+.large-dropzone.dragover { /* Class added by JS on drag over */
+    border-color: var(--text-accent);
+    background-color: rgba(var(--accent-primary-rgb, 138, 79, 255), 0.1);
+}
+.dropzone-icon-inner {
+    font-size: 2.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    display: block;
+}
+.large-dropzone p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+.large-dropzone span {
+    display: block;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+#ad-file-preview .no-file-selected {
+    font-style: italic;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 1rem 0;
+}
+/* Add styles for file preview items (name, size, progress, remove button) */
+.file-preview-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+.file-info { flex-grow: 1; margin-right: 1rem; }
+.file-name { font-weight: 500; color: var(--text-primary); }
+.file-size { font-size: 0.8rem; color: var(--text-secondary); margin-left: 0.5rem;}
+.remove-file-btn { background: none; border: none; color: #dc3545; cursor: pointer; font-size: 1.1rem; }
+
+
+/* Confirmation Step */
+.confirmation-details {
+    background-color: rgba(var(--bg-primary-rgb, 13, 13, 18), 0.5);
+    border-radius: var(--border-radius-md);
+    padding: 1.5rem 2rem;
+    margin: 2rem auto;
+    max-width: 600px;
+    text-align: left;
+}
+.confirmation-details p {
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+.confirmation-details strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+.status-pending {
+    color: #ffc107; /* Yellow for pending */
+    font-weight: 600;
+}
+.confirmation-actions {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .step-container { padding: 2rem 1.5rem; }
+    .page-title { font-size: 1.8rem; }
+    .page-subtitle { font-size: 1rem; }
+    .form-grid-2col { grid-template-columns: 1fr; }
+    .checkbox-options { grid-template-columns: 1fr; } /* Stack checkboxes */
+}
+
+/* css/advertiser-upload.css */
+
+body.advertiser-upload-page {
+    background-color: var(--bg-secondary);
+}
+
+.advertiser-hub-content {
+    padding-top: 90px; /* Adjust space for header */
+    padding-bottom: 4rem;
+}
+
+.advertiser-step { display: none; }
+.advertiser-step.active-step { display: block; animation: fadeInStep 0.5s ease-out; }
+@keyframes fadeInStep { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.step-container {
+    max-width: 850px; /* Slightly wider container */
+    margin: 0 auto;
+    padding: 2.5rem 3rem; /* Standard padding */
+}
+.step-icon { color: var(--text-accent); margin-bottom: 1.5rem; display: block; text-align: center; }
+.step-icon.success-icon { color: #198754; }
+
+/* Terms Step */
+.terms-box {
+    background-color: rgba(var(--bg-primary-rgb, 13, 13, 18), 0.6);
+    border: 1px solid var(--border-color); border-radius: var(--border-radius-md);
+    padding: 2rem; margin: 2rem auto; max-width: 700px; text-align: left;
+    color: var(--text-secondary); font-size: 0.9rem;
+}
+.terms-box h4 { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; }
+.terms-box ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+.terms-box li { margin-bottom: 0.6rem; }
+.terms-box a { color: var(--text-accent); text-decoration: underline; }
+.form-group.checkbox-group { justify-content: flex-start; max-width: 700px; margin: 1.5rem auto; } /* Align checkbox left */
+#proceed-to-form-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Metadata Form */
+.form-section-title {
+    font-size: 1.3rem; font-weight: 600; color: var(--text-primary);
+    margin-top: 2.5rem; margin-bottom: 1.25rem; padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.form-section-title:first-of-type { margin-top: 0; }
+.checkbox-group-multiple label { font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.75rem; }
+.checkbox-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; }
+.checkbox-options label { /* Styles from components.css */ }
+
+/* Upload Step */
+.ad-format-requirements {
+    background-color: rgba(var(--accent-primary-rgb, 138, 79, 255), 0.08);
+    border: 1px solid rgba(var(--accent-primary-rgb, 138, 79, 255), 0.3);
+    border-radius: var(--border-radius-md); padding: 1.5rem; margin-bottom: 2rem;
+    color: var(--text-secondary);
+}
+.ad-format-requirements h4 { color: var(--text-primary); font-weight: 600; margin-bottom: 0.75rem; }
+.ad-format-requirements strong { color: var(--text-accent); }
+.ad-format-requirements ul { list-style: disc; padding-left: 1.5rem; font-size: 0.9rem; }
+.ad-format-requirements li { margin-bottom: 0.4rem; }
+
+.large-dropzone { /* Styles from components.css */ padding: 4rem 2rem; margin-bottom: 1.5rem; }
+.dropzone-icon-inner { font-size: 3rem; color: var(--text-secondary); margin-bottom: 1rem; display: block; }
+
+/* Confirmation Step */
+.confirmation-details {
+    background-color: rgba(var(--bg-primary-rgb, 13, 13, 18), 0.6);
+    border-radius: var(--border-radius-md); padding: 2rem; margin: 2rem auto;
+    max-width: 650px; text-align: left; border: 1px solid var(--border-color);
+}
+.confirmation-details p { color: var(--text-secondary); margin-bottom: 1rem; font-size: 1rem; line-height: 1.6; }
+.confirmation-details strong { color: var(--text-primary); font-weight: 600; }
+.status-pending { color: #ffc107; font-weight: 600; } /* Yellow */
+.confirmation-actions { margin-top: 2.5rem; display: flex; justify-content: center; gap: 1rem; }
+
+/* General Form Message Styling (if not fully covered in components.css) */
+.form-message {
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.9rem;
+    text-align: center;
+}
+.form-message.error { background-color: rgba(220, 53, 69, 0.1); color: #dc3545; border: 1px solid rgba(220, 53, 69, 0.3); }
+.form-message.success { background-color: rgba(25, 135, 84, 0.1); color: #198754; border: 1px solid rgba(25, 135, 84, 0.3); }
+.form-message.info { background-color: rgba(13, 202, 240, 0.1); color: #0dcaf0; border: 1px solid rgba(13, 202, 240, 0.3); }
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .step-container { padding: 2rem 1.5rem; }
+    .terms-box { padding: 1.5rem; margin: 1.5rem auto; }
+    .checkbox-options { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SympleTunes Studio</title>
+    <meta name="description" content="Your SympleTunes Studio dashboard for managing content, stats, earnings, and settings.">
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.png" type="image/x-icon"> 
+    <link rel="apple-touch-icon" href="apple-touch-icon.png"> 
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="glassmorphism.css">
+    <link rel="stylesheet" href="dashboardpage.css">
+    <link rel="stylesheet" href="responsive.css"> <!-- Load last -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-HASH..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+<body class="dashboard-page">
+
+    <!-- Loading Indicator -->
+    <div id="loading-indicator">
+        <div class="spinner large"></div>
+        <p>Loading Dashboard...</p>
+    </div>
+
+   
+    <!-- Main Dashboard Wrapper (Initially hidden) -->
+    <div id="dashboard-wrapper" style="display: none;">
+
+        <!-- Header (Logged-In State) -->
+        <header class="main-header glass-nav sticky-header">
+            <div class="container header-container">
+                <a href="index.html" class="logo">
+                    <img src="logo.png" alt="SympleTunes Studio Logo"> <!-- UPDATE PATH -->
+                    <span>SympleTunes Studio</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="explore.html">Explore</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="help.html">Help</a></li>
+                        <li><a href="#overview-section" class="active">Dashboard</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                    <button class="btn-icon notifications-btn" aria-label="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge notification-count" style="display: none;">0</span>
+                    </button>
+                    <div class="profile-dropdown">
+                        <button class="profile-trigger" aria-label="Profile menu">
+                            <img src="profile-picture.png" alt="My Profile" id="header-profile-pic" class="header-avatar"> <!-- UPDATE PATH -->
+                        </button>
+                        <div class="dropdown-menu glass-element">
+                            <div class="dropdown-header">
+                                <span id="header-username">User Name</span>
+                                <span id="header-user-email">user@email.com</span>
+                            </div>
+                            <a href="profile.html" class="dropdown-item"><i class="fas fa-user"></i> My Profile</a>
+                            <a href="upload.html" class="dropdown-item"><i class="fas fa-cloud-upload-alt"></i> Upload Content</a>
+                            <a href="#settings-section" class="dropdown-item" id="settings-link"><i class="fas fa-cog"></i> Account Settings</a>
+                            <hr class="dropdown-divider">
+                            <button class="dropdown-item" id="logout-button"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="mobile-menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNavMenu">
+                     <svg viewBox="0 0 100 80" width="30" height="30" fill="var(--text-primary)"><rect width="100" height="10" rx="5"></rect><rect y="30" width="100" height="10" rx="5"></rect><rect y="60" width="100" height="10" rx="5"></rect></svg>
+                </button>
+            </div>
+        </header>
+        <div class="mobile-nav-menu" id="mobileNavMenu">
+            <ul>
+                <li><a href="explore.html">Explore</a></li>
+                <li><a href="#overview-section">Dashboard Overview</a></li>
+                <li><a href="#content-section">My Content</a></li>
+                <li><a href="#analytics-section">Analytics</a></li>
+                <li><a href="#earnings-section">Earnings</a></li>
+                <li><a href="#notifications-section">Notifications</a></li>
+                <li><a href="profile.html">My Profile</a></li>
+                 <li><a href="#settings-section">Settings</a></li>
+                <li><button class="btn btn-secondary" id="mobile-logout-button">Sign Out</button></li>
+            </ul>
+        </div>
+        <div class="dashboard-layout">    
+            <button id="mobile-sidebar-toggle" aria-label="Toggle Sidebar">
+                <i class="fas fa-arrow-right" id="sidebar-toggle-icon"></i>
+              </button>
+                 
+            <aside class="dashboard-sidebar glass-element">
+    <nav class="sidebar-nav">
+      <ul>
+        <li class="active" data-section="overview">
+          <a href="#overview-section"><i class="fas fa-th-large"></i> Overview</a>
+        </li>
+        <li data-section="content">
+          <a href="#content-section"><i class="fas fa-music"></i> My Content</a>
+        </li>
+        <li data-section="analytics">
+          <a href="#analytics-section"><i class="fas fa-chart-bar"></i> Analytics</a>
+        </li>
+        <li data-section="earnings">
+          <a href="#earnings-section"><i class="fas fa-dollar-sign"></i> Earnings</a>
+        </li>
+  
+        <!-- Role-Specific Links -->
+        <li data-section="events" class="role-specific event_organizer" style="display: none;">
+          <a href="#events-section"><i class="fas fa-calendar-alt"></i> My Events</a>
+        </li>
+        <li data-section="ads" class="role-specific advertiser" style="display: none;">
+          <a href="#ads-section"><i class="fas fa-bullhorn"></i> My Ads</a>
+        </li>
+  
+        <li data-section="notifications">
+          <a href="#notifications-section">
+            <i class="fas fa-bell"></i> Notifications
+            <span class="badge sidebar-badge" style="display:none;">0</span>
+          </a>
+        </li>
+  
+        <li data-section="settings">
+          <a href="#settings-section"><i class="fas fa-cog"></i> Settings</a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  
+
+            <!-- Main Content Area - Now contains all sections -->
+            <main class="dashboard-content">
+
+                <!-- == Overview Section == -->
+                <section id="overview-section" class="dashboard-section scroll-target">
+                    <div class="dashboard-main-header"> <!-- Header for this section -->
+                        <h1>Dashboard Overview</h1>
+                        <div class="quick-actions">
+                            <a href="upload.html" class="btn btn-primary"><i class="fas fa-upload"></i> Upload New Content</a>
+                        </div>
+                    </div>
+                    <h2 class="section-title-sub visually-hidden">Welcome back, <span id="welcome-username">[User Name]</span>!</h2> <!-- Hide redundant welcome, keep for JS -->
+                    <div class="overview-widgets">
+                         <div class="widget glass-card">
+                            <h4>Total Uploads</h4>
+                            <p class="widget-value" id="widget-total-uploads">--</p>
+                            <small id="widget-total-uploads-change">Loading...</small>
+                        </div>
+                        <div class="widget glass-card">
+                            <h4>Total Earnings</h4>
+                            <p class="widget-value" id="widget-total-earnings">$--.--</p>
+                            <small id="widget-total-earnings-info">Loading...</small>
+                        </div>
+                        <div class="widget glass-card">
+                            <h4>Followers</h4>
+                            <p class="widget-value" id="widget-followers">--</p>
+                            <small id="widget-followers-change">Loading...</small>
+                        </div>
+                        <div class="widget glass-card">
+                            <h4>Content Plays (Month)</h4>
+                            <p class="widget-value" id="widget-plays">--</p>
+                            <small id="widget-plays-change">Loading...</small>
+                        </div>
+                    </div>
+                    <div class="dashboard-split-section">
+                        <div class="recent-content-panel glass-element">
+                            <h3 class="panel-title">Your Recent Content</h3>
+                            <div class="content-grid minimal-grid" id="recent-content-grid">
+                                <p id="loading-recent-content">Loading content...</p>
+                                <p id="no-recent-content" style="display: none;">You haven't uploaded any content yet. <a href="upload.html">Upload now</a>!</p>
+                            </div>
+                            <a href="#content-section" class="view-all-link">View All Content →</a>
+                        </div>
+                        <div class="recent-notifications-panel glass-element">
+                            <h3 class="panel-title">Recent Notifications</h3>
+                            <ul class="notification-list" id="recent-notification-list">
+                                 <li id="loading-recent-notifications">Loading notifications...</li>
+                                 <li id="no-recent-notifications" style="display: none;">No new notifications.</li>
+                            </ul>
+                            <a href="#notifications-section" class="view-all-link">View All Notifications →</a>
+                        </div>
+                    </div>
+                </section>
+
+                 <!-- == My Content Section == -->
+                <section id="content-section" class="dashboard-section scroll-target">
+                    <div class="dashboard-main-header">
+                        <h1>My Content</h1>
+                         <div class="quick-actions">
+                            <a href="upload.html" class="btn btn-primary"><i class="fas fa-upload"></i> Upload New Content</a>
+                            <!-- Add filter/sort controls here -->
+                        </div>
+                    </div>
+                    <div class="content-management-area glass-card">
+                        <p>Content listing table or grid will go here. Fetch all user content.</p>
+                        <!-- Add table/grid structure -->
+                        <div id="user-content-list">
+                            <p>Loading your content...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- == Analytics Section == -->
+                <section id="analytics-section" class="dashboard-section scroll-target">
+                     <div class="dashboard-main-header">
+                        <h1>Analytics</h1>
+                        <!-- Add date range selectors etc. -->
+                    </div>
+                     <div class="placeholder-content glass-card">
+                        <i class="fas fa-chart-line fa-3x placeholder-icon"></i>
+                        <p>Detailed analytics are coming soon!</p>
+                        <span>Track plays, listener demographics, follower growth, and more.</span>
+                     </div>
+                </section>
+
+                 <!-- == Earnings Section == -->
+                 <section id="earnings-section" class="dashboard-section scroll-target">
+                     <div class="dashboard-main-header">
+                        <h1>Earnings & Payouts</h1>
+                        <!-- Add payout setup button etc. -->
+                    </div>
+                     <div class="placeholder-content glass-card">
+                        <i class="fas fa-hand-holding-usd fa-3x placeholder-icon"></i>
+                        <p>Your earnings breakdown isn't available yet.</p>
+                        <span>Once you start monetizing, your reports will appear here.</span>
+                     </div>
+                 </section>
+
+                 <!-- == My Events Section (Role Specific) == -->
+                <section id="events-section" class="dashboard-section scroll-target role-specific event_organizer" style="display: none;">
+                    <div class="dashboard-main-header">
+                        <h1>My Events</h1>
+                         <div class="quick-actions">
+                            <a href="#" class="btn btn-primary">Create New Event</a>
+                        </div>
+                    </div>
+                    <div class="content-management-area glass-card">
+                         <p>List of your created/managed events will go here.</p>
+                         <div id="user-events-list"><p>Loading your events...</p></div>
+                    </div>
+                </section>
+
+                <!-- == My Ads Section (Role Specific) == -->
+                <section id="ads-section" class="dashboard-section scroll-target role-specific advertiser" style="display: none;">
+                   <div class="dashboard-main-header">
+                        <h1>My Ad Campaigns</h1>
+                         <div class="quick-actions">
+                            <a href="#" class="btn btn-primary">Create New Campaign</a>
+                        </div>
+                    </div>
+                     <div class="content-management-area glass-card">
+                         <p>List of your ad campaigns and performance stats will go here.</p>
+                         <div id="user-ads-list"><p>Loading your ad campaigns...</p></div>
+                    </div>
+                </section>
+
+                 <!-- == Notifications Section == -->
+                <section id="notifications-section" class="dashboard-section scroll-target">
+                    <div class="dashboard-main-header">
+                        <h1>All Notifications</h1>
+                         <div class="quick-actions">
+                            <button class="btn btn-secondary btn-small" id="mark-all-read-btn">Mark All as Read</button>
+                        </div>
+                    </div>
+                    <div class="content-management-area glass-card">
+                        <ul class="notification-list full-list" id="full-notification-list">
+                             <li id="loading-all-notifications">Loading notifications...</li>
+                             <li id="no-all-notifications" style="display: none;">No notifications found.</li>
+                        </ul>
+                        <!-- Add pagination if needed -->
+                    </div>
+                </section>
+
+                <!-- == Settings Section == -->
+                <section id="settings-section" class="dashboard-section scroll-target">
+                    <div class="dashboard-main-header">
+                        <h1>Account Settings</h1>
+                    </div>
+                    <div class="settings-area glass-card">
+                         <p>Settings related to your account, profile visibility, notifications preferences, linked accounts, password change, etc., will go here.</p>
+                         <a href="profile.html?edit=true" class="btn btn-secondary">Edit Profile Details</a>
+                         <!-- Add more settings forms/options -->
+                    </div>
+                </section>
+
+            </main> <!-- End Main Content Area -->
+        </div> <!-- End Dashboard Layout -->
+    </div><!-- End #dashboard-wrapper -->
+
+    <!-- Supabase & JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+    <script src="main.js"></script> <!-- For header/mobile menu -->
+    <script src="dashboard.js"></script> <!-- Dashboard logic -->
+
+</body>
+</html>

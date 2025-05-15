@@ -1,0 +1,490 @@
+/* ============================================= */
+/* Buttons                                       */
+/* ============================================= */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    border: none;
+    text-align: center;
+    line-height: 1.5;
+    text-decoration: none; /* Ensure links styled as buttons don't have underlines */
+    white-space: nowrap; /* Prevent buttons from wrapping text */
+}
+
+.btn-primary {
+    background-color: var(--accent-primary);
+    color: var(--text-on-accent);
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--accent-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(var(--accent-primary-rgb, 138, 79, 255), 0.3); /* Use RGB for alpha */
+}
+
+.btn-secondary {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+.btn-secondary:hover, .btn-secondary:focus {
+    background-color: var(--accent-primary); /* Change to primary accent on hover */
+    color: var(--text-on-accent);
+    border-color: var(--accent-primary);
+    transform: translateY(-1px);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--text-accent);
+    border: 2px solid var(--text-accent);
+}
+.btn-outline:hover, .btn-outline:focus {
+    background-color: var(--text-accent);
+    color: var(--text-on-accent);
+}
+
+.btn-link-style { /* For the "For Artists", "For Advertisers" buttons in hero */
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    font-weight: 500;
+}
+.btn-link-style:hover, .btn-link-style:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border-color: var(--border-glass);
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.05rem;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: inline-flex; /* For aligning icon inside */
+    align-items: center;
+    justify-content: center;
+}
+.btn-icon:hover, .btn-icon:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+.btn-icon svg, .btn-icon img { /* For SVG or img icons within buttons */
+    width: 20px; /* Default icon size in button */
+    height: 20px;
+    display: block;
+}
+.btn img, .btn svg { /* For icons next to text in buttons */
+    margin-right: 0.5rem;
+    vertical-align: middle; /* Helps align with text */
+}
+
+/* ============================================= */
+/* Cards (General purpose card beyond glass-card)*/
+/* ============================================= */
+.card {
+    background-color: var(--bg-secondary);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-color);
+    transition: var(--transition-smooth);
+}
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-medium);
+}
+.card-header {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.card-title { /* General card title */
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.card-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Feature Item Card (specific use on homepage, already uses glass-card) */
+.feature-item .feature-icon {
+    height: 40px; /* Adjust as needed */
+    width: 40px;
+    margin-bottom: 1rem;
+    /* Icon color might be set directly or via SVG fill/stroke */
+    color: var(--text-accent);
+}
+.feature-item h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+.feature-item p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Content Card (for explore page, profile content) */
+.content-card {
+    /* Uses .glass-card for its base styling */
+    text-decoration: none;
+    display: block; /* To make the whole card clickable */
+}
+.content-card .card-thumbnail {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius-md); /* Rounded corners for the image container */
+    margin-bottom: 1rem;
+    aspect-ratio: 16 / 10; /* Or 1/1 for square, adjust as needed */
+    background-color: var(--bg-primary); /* Placeholder bg for image */
+}
+.content-card .card-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+.content-card:hover .card-thumbnail img {
+    transform: scale(1.05);
+}
+.content-card .card-play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 0.75rem;
+    opacity: 0;
+    transition: var(--transition-smooth);
+}
+.content-card .card-play-icon img { /* If using an img tag for play icon */
+    width: 24px;
+    height: 24px;
+    filter: invert(1); /* Make it white if the SVG is black */
+}
+.content-card:hover .card-play-icon {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+.content-card .card-info {
+    padding: 0 0.5rem; /* Some padding if not directly using .glass-card padding */
+}
+.content-card .card-info .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.content-card .card-info .card-creator {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+.content-card .card-info .card-creator a {
+    color: var(--text-secondary);
+}
+.content-card .card-info .card-creator a:hover {
+    color: var(--text-accent);
+    text-decoration: underline;
+}
+.content-card .card-type-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+    background-color: rgba(var(--accent-primary-rgb, 138, 79, 255), 0.2);
+    color: var(--text-accent);
+    border-radius: var(--border-radius-sm);
+}
+
+
+/* ============================================= */
+/* Forms                                         */
+/* ============================================= */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    background-color: var(--bg-primary); /* Slightly darker than card bg for input fields */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    transition: border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+    font-family: var(--font-family-main);
+}
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--text-accent);
+    box-shadow: 0 0 0 3px rgba(var(--accent-primary-rgb, 138, 79, 255), 0.3);
+}
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+.form-input-file { /* For file inputs, style the label to look like a button */
+    display: block; /* Or inline-block */
+    /* Styling might involve hiding the actual input and styling its label */
+}
+.form-input.large-search { /* For search bars in hero sections etc. */
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    border-radius: var(--border-radius-lg); /* More rounded for prominent search */
+}
+.search-bar-container { /* For help page search */
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.search-bar-container .form-input {
+    flex-grow: 1;
+}
+
+/* ============================================= */
+/* Modals                                        */
+/* ============================================= */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
+    align-items: center; /* For vertical centering */
+    justify-content: center; /* For horizontal centering */
+}
+.modal.active {
+    display: flex; /* Use flex for centering */
+}
+.modal-content {
+    /* Uses .glass-card for its base styling */
+    margin: auto; /* Centering fallback */
+    padding: 2rem;
+    width: 90%;
+    max-width: 500px; /* Adjust as needed */
+    position: relative;
+    animation: fadeInModal 0.3s ease-out;
+}
+.close-modal-btn {
+    color: var(--text-secondary);
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+    font-size: 1.75rem;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+.close-modal-btn:hover,
+.close-modal-btn:focus {
+    color: var(--text-primary);
+}
+@keyframes fadeInModal {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ============================================= */
+/* Badges & Tags                                 */
+/* ============================================= */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: var(--border-radius-sm);
+    background-color: var(--accent-primary);
+    color: var(--text-on-accent);
+    line-height: 1;
+}
+.badge-secondary {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+.role-badge { /* For user roles on profiles etc. */
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-accent);
+    background-color: rgba(var(--accent-primary-rgb, 138, 79, 255), 0.15);
+    padding: 0.2rem 0.7rem;
+    border-radius: 1rem; /* Pill shape */
+    display: inline-block;
+}
+
+/* ============================================= */
+/* Tabs                                          */
+/* ============================================= */
+.tabs-nav {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+    overflow-x: auto; /* For many tabs on mobile */
+}
+.tabs-nav.glass-nav-tabs { /* Specific style for profile page tabs */
+    /* .glass-nav styles can be applied directly to .tabs-nav if it is a glass element */
+    /* Or create a specific glass variant for tabs if needed */
+    padding: 0.5rem; /* Adjust if it's a glass element */
+    border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
+}
+.tab-link {
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition: color var(--transition-smooth), border-color var(--transition-smooth);
+    white-space: nowrap;
+}
+.tab-link:hover {
+    color: var(--text-primary);
+}
+.tab-link.active {
+    color: var(--text-accent);
+    border-bottom-color: var(--text-accent);
+    font-weight: 600;
+}
+.tab-content-area .tab-pane {
+    display: none; /* Hidden by default */
+    animation: fadeInTab 0.4s ease;
+}
+.tab-content-area .tab-pane.active {
+    display: block;
+}
+@keyframes fadeInTab {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ============================================= */
+/* Progress Bars                                 */
+/* ============================================= */
+progress {
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden; /* Ensures rounded corners for the value */
+    -webkit-appearance: none;
+    appearance: none;
+    border: none; /* Remove default border */
+}
+progress::-webkit-progress-bar {
+    background-color: var(--bg-primary); /* Background of the bar */
+    border-radius: 5px;
+}
+progress::-webkit-progress-value {
+    background-color: var(--text-accent); /* Color of the progress fill */
+    border-radius: 5px;
+    transition: width 0.3s ease;
+}
+progress::-moz-progress-bar { /* Firefox */
+    background-color: var(--text-accent);
+    border-radius: 5px;
+    transition: width 0.3s ease;
+}
+.upload-progress-container {
+    margin-top: 1rem;
+}
+.upload-progress-container label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.3rem;
+}
+#upload-progress-text {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-left: 0.5rem;
+}
+
+/* ============================================= */
+/* Accordion (for FAQs)                          */
+/* ============================================= */
+.faq-item { /* <details> tag */
+    /* Uses .glass-element for base styling */
+    margin-bottom: 1rem;
+    border-radius: var(--border-radius-md); /* Override if glass-element is lg */
+}
+.faq-item summary {
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    list-style: none; /* Remove default marker */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color var(--transition-smooth);
+}
+.faq-item summary::-webkit-details-marker { /* Hide Safari marker */
+    display: none;
+}
+.faq-item summary::after { /* Custom marker */
+    content: '+';
+    font-size: 1.5rem;
+    font-weight: 300;
+    transition: transform 0.3s ease;
+}
+.faq-item[open] summary {
+    /* background-color: rgba(var(--accent-primary-rgb, 138, 79, 255), 0.1); */
+}
+.faq-item[open] summary::after {
+    transform: rotate(45deg);
+    content: '+'; /* Or use an SVG for a cleaner X */
+}
+.faq-answer {
+    padding: 0 1.25rem 1.25rem 1.25rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+.faq-answer p {
+    margin-bottom: 0.5rem;
+}
+.faq-answer p:last-child {
+    margin-bottom: 0;
+}

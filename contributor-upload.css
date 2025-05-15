@@ -1,0 +1,357 @@
+/* ============================================= */
+/* Contributor Upload Page Styles                */
+/* Uses global.css, components.css, glassmorphism.css */
+/* ============================================= */
+
+body.contributor-upload-page {
+    background-color: var(--bg-primary); /* Ensures primary dark background */
+}
+
+.contributor-hub-content {
+    padding-top: calc(var(--header-height, 70px) + 2rem); /* Consistent with other hub pages */
+    padding-bottom: 4rem;
+}
+
+/* --- Form Container & Header --- */
+.form-container {
+    /* .glass-card is applied in HTML for background, border, shadow, radius */
+    padding: 2rem 2.5rem; /* Inner spacing for the main form card */
+    margin-bottom: 3rem; /* Space before the list of contributions */
+}
+
+.form-header-inline {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem; /* Increased space below header */
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.form-header-inline .form-icon {
+    color: var(--text-accent);
+    font-size: 1.8em; /* Relative to parent h1 */
+}
+.form-header-inline .page-title {
+    margin-bottom: 0;
+    font-size: 1.8rem; /* Main title size within form */
+    color: var(--text-primary);
+}
+#contributor-form-subtitle {
+    text-align: center; /* Center if it's a general subtitle */
+    margin-top: -1rem; /* Pull up slightly if header has enough bottom margin */
+    margin-bottom: 2.5rem;
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+/* --- Form Structure (Fieldsets, Legends, Grids) --- */
+#contributor-submission-form fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 2.5rem 0;
+}
+#contributor-submission-form fieldset:last-of-type {
+    margin-bottom: 1.5rem;
+}
+
+#contributor-submission-form .form-section-title {
+    font-size: 1.3rem; /* Standard section title size */
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(var(--border-color-rgb), 0.4); /* Slightly more prominent section border */
+    display: flex;
+    align-items: center;
+}
+#contributor-submission-form .form-section-title i {
+    margin-right: 0.85rem; /* More space for icon */
+    color: var(--text-accent);
+    font-size: 1.05em; /* Slightly larger icon relative to title */
+}
+
+/* Form Grid Layouts (using existing classes from previous examples if consistent) */
+#contributor-submission-form .form-grid-2col,
+#contributor-submission-form .form-grid-3col {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile first */
+    gap: 1.25rem;
+}
+@media (min-width: 600px) { /* Tablet and up */
+    #contributor-submission-form .form-grid-2col { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 800px) { /* Larger tablets / Small desktops */
+    #contributor-submission-form .form-grid-3col { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+
+/* --- File Uploads & Previews Styling --- */
+/* Generic .image-preview-container styling should come from components.css if possible */
+/* This provides overrides or specifics for this page */
+#contributor-submission-form .image-preview-container {
+    margin-top: 0.75rem; /* More space above preview */
+    height: 130px; /* Default preview height */
+    max-width: 220px; /* Default max width */
+    border: 2px dashed var(--border-color); /* From global */
+    border-radius: var(--border-radius-sm); /* From global */
+    background-color: rgba(var(--bg-primary-rgb), 0.4); /* Slightly different from input bg */
+    /* Flex centering from components.css or here */
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+}
+#contributor-submission-form .image-preview-container img {
+    max-width: 100%; max-height: 100%; object-fit: cover;
+}
+/* Specific preview sizes */
+#contributor-submission-form .image-preview-container.profile-image-preview {
+    width: 120px; height: 120px; border-radius: 50%; /* Circular for profile */
+}
+#contributor-submission-form .image-preview-container.cover-image-preview {
+    max-width: 100%; height: 150px; /* Wider for general cover */
+}
+#contributor-submission-form .image-preview-container.cover-art-preview {
+    max-width: 180px; height: 180px; /* Square-ish for content cover art */
+}
+/* .remove-image-btn should use .btn .btn-secondary .btn-small from components.css */
+#contributor-submission-form .remove-image-btn { margin-top: 0.5rem; }
+#contributor-submission-form .remove-image-btn i { margin-right: 0.3rem; }
+
+
+/* .file-list-preview-ui.bordered-list and .file-preview-item */
+/* Base styles should be in components.css if reused, these are overrides/specifics */
+.file-list-preview-ui.bordered-list {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    padding: 0.75rem;
+    min-height: 60px;
+    margin-top: 0.5rem;
+    background-color: rgba(var(--bg-primary-rgb), 0.4);
+}
+.file-list-preview-ui .no-files-note {
+    font-style: italic; color: var(--text-secondary); font-size: 0.9rem;
+    text-align: center; padding: 1rem 0;
+}
+.file-preview-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.7rem 1rem; /* Increased padding */
+    background-color: var(--bg-primary); /* Slightly darker than list background */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 0.6rem; font-size: 0.9rem;
+    color: var(--text-primary);
+}
+.file-preview-item .file-info { flex-grow: 1; margin-right: 1rem; display: flex; align-items: center;}
+.file-preview-item .file-icon { margin-right: 0.75rem; color: var(--text-accent); font-size: 1.1em; }
+.file-preview-item .file-name { font-weight: 500; }
+.file-preview-item .file-size { font-size: 0.8rem; color: var(--text-secondary); margin-left: 0.75rem; }
+.file-preview-item .remove-file-btn { /* Button to remove item from list */
+    background: none; border: none; color: #e74c3c; /* Danger color */
+    cursor: pointer; font-size: 1.2rem; padding: 0.25rem; line-height: 1;
+    transition: color 0.2s ease;
+}
+.file-preview-item .remove-file-btn:hover { color: #c0392b; }
+.file-preview-item .view-file-link {
+    font-size: 0.8rem; color: var(--text-accent); margin-left: 0.5rem;
+    text-decoration: none;
+}
+.file-preview-item .view-file-link:hover { text-decoration: underline; }
+.file-preview-item.existing-file .file-note {
+    font-size: 0.75rem; color: var(--text-secondary); font-style: italic;
+    margin-left: auto; padding-left: 1rem; /* Push to right */
+}
+
+
+/* --- Media Group Visibility (Dynamic based on content type selection) --- */
+.media-group {
+    /* border-top: 1px dashed rgba(var(--border-color-rgb), 0.3); */ /* Softer separator */
+    /* padding-top: 1.5rem; */
+    /* margin-top: 1.5rem; */
+    /* Keep display:none initially, JS toggles to block */
+}
+.additional-group {
+    display: none; /* Hidden by default, JS shows based on content type */
+    /* Optional: add subtle visual cue for these dynamic sections */
+    /* padding: 1rem; background-color: rgba(var(--bg-primary-rgb), 0.2); border-radius: var(--border-radius-sm); margin-top:1rem; */
+}
+.additional-group.active { display: block; } /* JS adds this class */
+
+
+/* --- Form Actions --- */
+/* Styling for .form-actions, .btn .btn-primary .btn-large should come from components.css */
+#contributor-submission-form .form-actions {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end; /* Align button(s) to the right */
+    gap: 0.75rem;
+}
+#contributor-submission-form .form-actions #clear-contributor-form-btn {
+    margin-right: auto; /* Push "Clear" button to the left */
+}
+#submit-contribution-btn i { margin-right: 0.6rem; } /* Space for icon in submit button */
+
+
+/* --- Contributions List Area --- */
+#contributions-list-section .list-header {
+    /* Reusing from manage-events.css if layout is the same */
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 1.5rem;
+}
+#contributions-list-section .section-title-sub {
+    margin-bottom: 0; display: flex; align-items: center; gap: 0.75rem;
+    font-size: 1.5rem; color: var(--text-primary);
+}
+#contributions-list-section .section-title-sub i { color: var(--text-accent); }
+
+.contributions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.75rem; /* Increased gap */
+}
+.status-message { /* For loading/no contributions */
+    grid-column: 1 / -1; text-align: center; padding: 3rem 1rem;
+    font-size: 1rem; color: var(--text-secondary); font-style: italic;
+}
+
+/* --- Contribution Card Styling --- */
+.contribution-card-item {
+    /* .glass-card applied in HTML for base style */
+    display: flex; flex-direction: column;
+    text-decoration: none; color: var(--text-primary);
+    overflow: hidden; /* Clip cover image */
+    transition: transform 0.2s ease-out; /* box-shadow from .glass-card:hover */
+}
+.contribution-card-item:hover { transform: translateY(-4px); }
+
+.contribution-card-cover {
+    width: 100%; height: 160px;
+    background-color: var(--bg-secondary); /* Fallback bg */
+    overflow: hidden; /* Ensure img fits */
+}
+.contribution-card-cover img { width: 100%; height: 100%; object-fit: cover; }
+
+.contribution-card-info { padding: 1rem; flex-grow: 1; display: flex; flex-direction: column; }
+.contribution-card-info h4 {
+    font-size: 1.15rem; /* Slightly larger title */
+    font-weight: 600; margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    line-height: 1.3; overflow: hidden; text-overflow: ellipsis;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; min-height: 2.6em;
+}
+.contribution-card-meta {
+    font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;
+    display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+}
+.contribution-card-meta .type-badge {
+    background-color: var(--text-accent);
+    color: var(--text-on-accent, #fff); /* Use theme variable for text on accent */
+    padding: 0.2rem 0.5rem; border-radius: var(--border-radius-sm);
+    font-weight: 500; font-size: 0.75rem;
+}
+/* Contribution status badges can reuse .article-card-status styles if centralized */
+.contribution-card-status {
+    font-size: 0.75rem; font-weight: 500;
+    padding: 0.2rem 0.5rem; border-radius: var(--border-radius-sm);
+    align-self: flex-start; margin-top: auto; /* Push to bottom */
+}
+.contribution-card-status.draft { background-color: rgba(108, 117, 125, 0.2); color: #6c757d; }
+.contribution-card-status.public { background-color: rgba(25, 135, 84, 0.2); color: #198754; }
+.contribution-card-status.private { background-color: rgba(var(--accent-primary-rgb), 0.15); color: var(--text-accent); }
+.contribution-card-status.pending_review { background-color: rgba(255, 193, 7, 0.2); color: #ffc107; }
+
+
+/* Actions for contribution card (edit/delete) */
+.contribution-card-item .article-card-actions { /* Reusing from blogger if same */
+    border-top: 1px solid var(--border-color);
+    padding: 0.75rem 1rem; margin-top: 1rem;
+    display: flex; gap: 0.5rem; justify-content: flex-end;
+}
+/* .btn-icon styles from components.css */
+
+
+/* Define Root Colors for Global Styles */
+:root {
+  --primary-color: #001F3F; /* Dark Blue */
+  --accent-color: #0074D9; /* Light Blue */
+  --background-color: #222222; /* Dark Background */
+  --text-color: #ffffff; /* White Text */
+  --border-color: #444444; /* Darker Border */
+  --shadow-color: rgba(0, 0, 0, 0.3); /* Deeper Shadow */
+  --button-color: #ffffff; /* Button Color */
+  --button-hover-color: #0074D9; /* Button Hover */
+}
+
+/* Toast Notification Style */
+#toast-notification.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  min-width: 400px; /* Increased width for larger box */
+  max-width: 80%; /* Limit max width */
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 2px solid var(--border-color);
+  border-radius: 16px; /* Rounded corners for a modern look */
+  padding: 24px 28px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 12px 30px var(--shadow-color);
+  z-index: 9999;
+  text-align: center;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Show Toast Notification */
+#toast-notification.show {
+  display: flex;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Toast Icon Style */
+.toast-icon {
+  font-size: 32px; /* Larger icon for a bolder appearance */
+  color: var(--accent-color);
+  margin-bottom: 15px;
+}
+
+/* Toast Message Style */
+.toast-message {
+  font-size: 18px; /* Larger text for better readability */
+  margin: 0;
+  line-height: 1.6;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+/* Toast Close Button Style */
+.toast-close-btn {
+  margin-top: 16px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--button-color);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+/* Close Button Hover Effect */
+.toast-close-btn:hover {
+  color: var(--button-hover-color);
+}
+
+
+/* --- Responsive Overrides for this Page --- */
+@media (max-width: 768px) {
+    .form-container { padding: 1.5rem; }
+    #contributor-submission-form .form-grid-2col,
+    #contributor-submission-form .form-grid-3col {
+        grid-template-columns: 1fr; /* Stack all grid columns */
+    }
+    .contributions-grid { grid-template-columns: 1fr; } /* Stack contribution cards */
+    .form-header-inline { flex-direction: column; text-align: center; gap: 0.5rem; }
+    .form-header-inline .page-title { font-size: 1.6rem; }
+}

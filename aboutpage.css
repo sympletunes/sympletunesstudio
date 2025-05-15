@@ -1,0 +1,391 @@
+/* ============================================= */
+/* About Page Styles                             */
+/* ============================================= */
+
+body.about-page {
+    background-color: var(--bg-primary); /* Or a slightly different variant for content pages */
+}
+
+.about-content {
+ padding-top: calc(var(--header-height, 70px) + 1rem); /* Space for sticky header */
+  background: linear-gradient(to bottom, rgba(41, 41, 41, 0.89) 0%, rgba(0, 0, 0, 0.945) 100%);
+}
+
+/* --- Page Hero Section --- */
+/* Container for the hero section */
+.page-hero-section {
+  padding: 4rem 1rem;
+  border-radius: 1rem;
+  margin: 2rem 0;
+}
+.team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.team-member-card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(8px);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  width: 220px;
+}
+
+.team-member-avatar {
+  width: 100%;
+  max-width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.team-member-card h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+
+.team-social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.team-social-links a {
+  color: var(--text-accent);
+  font-size: 1.75rem;
+  transition: color 0.3s ease;
+}
+
+.team-social-links a:hover {
+  color: var(--text-hover, #6f42c1);
+}
+
+/* Flex layout: text on the left, logo on the right */
+.hero-flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+/* Text column */
+.hero-text {
+  width: 60%;
+  text-align: left;
+}
+
+/* Main title */
+.page-main-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+/* Subtitle paragraphs */
+.page-lead-subtitle {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
+
+/* Logo column */
+.hero-logo {
+  width: 34%;
+  text-align: center;
+}
+
+/* Logo image */
+.logo-image {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Hero icon (if used) */
+.hero-icon {
+  display: block;
+  margin: 0 auto 1rem;
+  color: var(--text-accent);
+  font-size: 3rem;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+/* Simple pulse animation */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Responsive adjustment */
+@media (max-width: 768px) {
+  .hero-flex {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hero-text {
+    flex: 1 1 100%;
+  }
+  .hero-logo {
+    flex: 1 1 100%;
+    margin-top: 1.5rem;
+  }
+}
+
+/* --- Content Limiter for Text Sections --- */
+.content-limiter {
+    max-width: 800px; /* Constrain width of text-heavy sections */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Section Titles (General) --- */
+.section-title { /* Reusable section title style */
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    text-align: center; /* Default center for these sections */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+.section-title i { /* Icon within the title */
+    color: var(--text-accent);
+    font-size: 0.9em; /* Relative to title */
+}
+
+/* --- Story Section --- */
+.story-section .story-content {
+    /* .glass-card applied in HTML */
+    padding: 2.5rem;
+    text-align: left;
+}
+.story-content p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+.story-content p:last-child { margin-bottom: 0; }
+
+/* --- Vision & Mission Section --- */
+.vision-mission-section.alternate-bg {
+    background-color: rgba(var(--bg-secondary-rgb), 0.2); /* Subtle alternating background */
+}
+.vision-mission-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile first */
+    gap: 2rem;
+}
+@media (min-width: 768px) {
+    .vision-mission-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+.vision-item, .mission-item {
+    /* .glass-card applied in HTML */
+    padding: 2.5rem;
+    text-align: center;
+}
+.vision-item .section-icon, .mission-item .section-icon {
+    font-size: 2.5rem;
+    color: var(--text-accent);
+    margin-bottom: 1.5rem;
+    display: block;
+}
+.vision-item .item-title, .mission-item .item-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+.vision-item p, .mission-item p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* --- Team Section / Designed By --- */
+.team-grid {
+    display: flex; /* Using flex for centering a single prominent card */
+    justify-content: center;
+    flex-wrap: wrap; /* Allow wrapping if more cards are added */
+    gap: 2rem;
+    margin-top: 1rem; /* Space below section title */
+}
+.team-member-card {
+    /* .glass-card applied in HTML */
+    padding: 2rem;
+    flex-basis: 320px; /* Base width for team member cards */
+    max-width: 400px; /* Max width for general team member */
+    text-align: center;
+}
+.team-member-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 1rem auto;
+    border: 3px solid var(--border-color);
+}
+.team-member-card h4 { /* Name */
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+.team-member-card .team-role {
+    font-size: 0.9rem;
+    color: var(--text-accent);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+}
+.team-member-card .team-bio {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Specific for "Designed by SymTech Web" card */
+.designed-by-card {
+    flex-basis: 450px; /* Wider card */
+    max-width: 550px;
+    padding: 2.5rem;
+}
+.designer-logo-container {
+    margin-bottom: 1.5rem;
+}
+.designer-logo {
+    max-width: 180px; /* Adjust SymTech logo size */
+    height: auto;
+    margin: 0 auto;
+}
+.designer-name {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.designer-company {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+.designer-statement {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+.designer-links .btn {
+    /* Uses .btn .btn-outline .btn-small from components.css */
+    margin-top: 0.5rem;
+}
+
+/* --- Future Goals Section --- */
+.future-goals-section.alternate-bg {
+    background-color: rgba(var(--bg-secondary-rgb), 0.2);
+}
+.future-goals-content {
+    /* .glass-card applied in HTML */
+    padding: 2.5rem;
+    text-align: left;
+}
+.future-goals-content p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+.future-goals-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+}
+.future-goals-content li {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: flex-start; /* Align icon with start of text */
+}
+.future-goals-content li i {
+    color: var(--text-accent);
+    margin-right: 0.75rem;
+    padding-top: 0.2em; /* Align icon better with text line */
+    width: 20px; /* Ensure space for icon */
+    flex-shrink: 0;
+}
+.future-goals-content li strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* --- CTA Join Section --- */
+.cta-join-section {
+    /* Uses global .section-padding */
+    background-color: rgba(var(--accent-primary-rgb), 0.05); /* Subtle accent background */
+    border-top: 1px solid rgba(var(--accent-primary-rgb), 0.2);
+    border-bottom: 1px solid rgba(var(--accent-primary-rgb), 0.2);
+}
+.cta-join-section .cta-icon {
+    color: var(--text-accent);
+    margin-bottom: 1.5rem;
+    display: block;
+}
+.cta-join-section .section-title {
+    color: var(--text-primary); /* Ensure contrast */
+    margin-bottom: 0.75rem;
+}
+.cta-join-section .section-subtitle.narrow-subtitle {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+}
+.cta-join-section .cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+/* .btn .btn-primary .btn-large and .btn-outline from components.css */
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .page-hero-section .page-main-title { font-size: 2.2rem; }
+    .page-hero-section .page-lead-subtitle { font-size: 1.05rem; }
+    .section-title { font-size: 1.7rem; }
+    .story-content p, .future-goals-content p, .future-goals-content li { font-size: 0.95rem; }
+    .vision-item .item-title, .mission-item .item-title { font-size: 1.3rem; }
+    .designer-company { font-size: 1.4rem; }
+}
+@media (max-width: 480px) {
+    .form-container, .story-section .story-content, .vision-item, .mission-item, .team-member-card, .future-goals-content {
+        padding: 1.5rem;
+    }
+    .page-hero-section { padding: 3rem 1rem; }
+    .designer-logo { max-width: 150px; }
+}

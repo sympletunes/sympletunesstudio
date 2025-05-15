@@ -1,0 +1,275 @@
+/* css/manage-events.css */
+
+body.manage-events-page {
+    background-color: var(--bg-primary);
+}
+
+.events-hub-content {
+    padding-top: 90px;
+    padding-bottom: 3rem;
+}
+
+/* Form Container Styling */
+.form-container {
+    /* .glass-card applied in HTML */
+    padding: 2rem 2.5rem;
+    margin-bottom: 3rem; /* Space before the list of events */
+}
+.form-header-inline {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem; /* Less space than full page title */
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+.form-header-inline .form-icon {
+    color: var(--text-accent);
+    /* fa-2x is already applied */
+}
+.form-header-inline .page-title {
+    margin-bottom: 0; /* Remove margin from global page-title */
+    font-size: 1.8rem; /* Adjust title size within form */
+}
+#event-form-subtitle {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+}
+
+.toast-container {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9999;
+}
+
+.toast {
+  background-color: #333;
+  color: white;
+  padding: 12px 20px;
+  margin-top: 10px;
+  border-radius: 5px;
+  opacity: 0;
+  animation: fadeInOut 3s ease forwards;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  font-size: 14px;
+}
+
+.toast.success { background-color: #28a745; }
+.toast.error { background-color: #dc3545; }
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(20px); }
+  10%, 90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-20px); }
+}
+
+#event-form fieldset {
+    border: none; padding: 0; margin: 0 0 2rem 0;
+}
+#event-form fieldset:last-of-type { margin-bottom: 1rem; }
+#event-form .form-section-title { /* Copied from advertiser, ensure consistency */
+    font-size: 1.3rem; font-weight: 600; color: var(--text-primary);
+    margin-bottom: 1.25rem; padding-bottom: 0.6rem;
+    border-bottom: 1px solid rgba(var(--border-color-rgb, 26,26,35), 0.5);
+    display: flex; align-items: center;
+}
+#event-form .form-section-title i { margin-right: 0.75rem; color: var(--text-accent); font-size: 1em; }
+
+#event-form .image-preview-container {
+    margin-top: 0.5rem; height: 150px;
+}
+#event-form .image-preview-container.cover-preview { height: 100px; }
+
+.remove-image-btn { /* Button to clear image preview */
+    margin-top: 0.5rem;
+    font-size: 0.8rem !important; /* Override .btn-small if needed */
+    padding: 0.3rem 0.6rem !important;
+}
+.remove-image-btn i { margin-right: 0.3rem; }
+
+
+#event-form .form-actions {
+    margin-top: 2rem; padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex; justify-content: flex-end; gap: 0.75rem;
+}
+#submit-event-btn i { margin-right: 0.5rem; }
+
+
+/* Events List Area */
+#events-list-section .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+#events-list-section .section-title-sub {
+    margin-bottom: 0; /* Remove margin as it's in a flex container */
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+#events-list-section .section-title-sub i {
+    color: var(--text-accent);
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjust card size */
+    gap: 1.75rem; /* Increased gap */
+}
+
+.status-message {
+    grid-column: 1 / -1; text-align: center; padding: 3rem 1rem;
+    font-size: 1rem; color: var(--text-secondary); font-style: italic;
+}
+
+/* Event Card Styling */
+.event-card-item {
+    /* .glass-card is applied in HTML */
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+.event-card-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+.event-card-poster {
+    width: 100%;
+    height: 200px; /* Fixed height for poster */
+    background-color: var(--bg-secondary); /* Placeholder */
+    border-radius: var(--border-radius-md) var(--border-radius-md) 0 0; /* Round top corners */
+    overflow: hidden;
+}
+.event-card-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.event-card-info {
+    padding: 1.25rem;
+    flex-grow: 1; /* Allow info to take remaining space */
+    display: flex;
+    flex-direction: column;
+}
+.event-card-info h3 { /* Event Name */
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    line-height: 1.3;
+     /* Clamp to 2 lines */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    min-height: 2.6em; /* Ensure space for 2 lines */
+}
+.event-card-details {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+}
+.event-card-details i {
+    margin-right: 0.5rem;
+    color: var(--text-accent);
+    width: 16px; /* Align icons */
+    text-align: center;
+}
+.event-card-status {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--border-radius-sm);
+    margin-top: auto; /* Push status to bottom of card info */
+    align-self: flex-start; /* Align left */
+}
+.event-card-status.pending { background-color: rgba(255, 193, 7, 0.2); color: #ffc107; } /* Yellow */
+.event-card-status.approved { background-color: rgba(25, 135, 84, 0.2); color: #198754; } /* Green */
+.event-card-status.rejected { background-color: rgba(220, 53, 69, 0.2); color: #dc3545; } /* Red */
+.event-card-status.live { background-color: rgba(13, 202, 240, 0.2); color: #0dcaf0; } /* Blue */
+.event-card-status.past { background-color: var(--bg-primary); color: var(--text-secondary); } /* Greyed out */
+
+.event-card-actions {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+.event-card-actions .btn-icon {
+    padding: 0.4rem; /* Smaller icon buttons */
+}
+.event-card-actions .btn-icon i { font-size: 0.9rem; }
+
+
+/* Modal Form Styling (General modal style from components.css) */
+#event-form-modal .modal-content.large-modal {
+    max-width: 750px; /* Wider modal for event form */
+}
+#event-modal-title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+}
+#event-form fieldset {
+    border: none; padding: 0; margin: 0 0 2rem 0;
+}
+#event-form fieldset:last-of-type { margin-bottom: 1rem; }
+#event-form .form-section-title { /* Consistent with artist profile form */
+    font-size: 1.3rem; font-weight: 600; color: var(--text-primary);
+    margin-bottom: 1.25rem; padding-bottom: 0.6rem;
+    border-bottom: 1px solid rgba(var(--border-color-rgb, 26,26,35), 0.5);
+    display: flex; align-items: center;
+}
+#event-form .form-section-title i { margin-right: 0.75rem; color: var(--text-accent); font-size: 1em; }
+
+#event-form .image-preview-container { /* From artist-profile-form.css or components.css */
+    margin-top: 0.5rem;
+    height: 150px; /* Adjust for poster */
+}
+#event-form .image-preview-container.cover-preview {
+    height: 100px; /* Adjust for cover banner */
+}
+#event-form .form-group.checkbox-group.inline-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+#event-form .form-group.checkbox-group.inline-checkbox input[type="checkbox"] {
+    margin-right: 0; /* Remove default margin */
+    width: auto; height: auto; /* Reset if globally set */
+}
+#event-form .form-group.checkbox-group.inline-checkbox label {
+    margin-bottom: 0; /* Override form-group label */
+    font-weight: normal; /* Less emphasis */
+}
+#event-form .form-actions { /* Consistent with other forms */
+    margin-top: 2rem; padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex; justify-content: flex-end; gap: 0.75rem;
+}/* Responsive */
+#event-poster-preview{
+    height: 160px;
+}
+#event-cover-preview{
+    height: 150px;
+}
+@media (max-width: 768px) {
+    .form-container { padding: 1.5rem; }
+    .form-header-inline { flex-direction: column; text-align: center; gap: 0.5rem;}
+    .form-header-inline .page-title { font-size: 1.6rem; }
+    #event-form fieldset { margin-bottom: 1.5rem; }
+    #events-list-section .list-header { flex-direction: column; align-items: flex-start; gap: 0.5rem;}
+}
+

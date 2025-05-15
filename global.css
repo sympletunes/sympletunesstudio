@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    /* Dark Theme Palette */
+    --bg-primary: #0D0D12; /* Very dark, slightly blue/purple tinted black */
+    --bg-secondary: #1A1A23; /* Slightly lighter for cards/sections */
+    --bg-glass: rgba(30, 30, 50, 0.5); /* Glassmorphism background */
+    --bg-glass-hover: rgba(40, 40, 60, 0.65);
+
+    --text-primary: #E0E0E5; /* Light grey for primary text */
+    --text-secondary: #A0A0B0; /* Softer grey for secondary text */
+    --text-accent: #9F70FD; /* Vibrant purple for accents/links */
+    --text-on-accent: #FFFFFF;
+
+    --accent-primary: #8A4FFF; /* Primary action color (e.g., Notion purple) */
+    --accent-secondary: #6C2FF2; /* Darker shade for hover/active */
+
+    --border-color: rgba(255, 255, 255, 0.08); /* Subtle borders */
+    --border-glass: rgba(255, 255, 255, 0.15);
+
+    /* UI Styles */
+    --font-family-main: 'Inter', sans-serif;
+    --border-radius-sm: 6px;
+    --border-radius-md: 10px;
+    --border-radius-lg: 16px;
+    --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.25);
+    --shadow-medium: 0 12px 32px rgba(0, 0, 0, 0.3);
+    --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family-main);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--text-accent);
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+a:hover {
+    opacity: 0.8;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Utility classes */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.text-center { text-align: center; }
+.my-1 { margin-top: 1rem; margin-bottom: 1rem; }
+/* ... more utility classes ... */

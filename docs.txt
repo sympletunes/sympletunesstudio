@@ -1,0 +1,238 @@
+📋 Table Name: profiles
+Column Name	Type	Notes
+id	UUID	Primary key, same as auth.users.id
+first_name	Text	Required
+middle_name	Text	Optional
+last_name	Text	Required
+dob	Date	Date of birth
+gender	Text	e.g., "Male", "Female", "Other"
+nationality	Text	
+email	Text	Can mirror auth.users.email
+phone_number	Text	Include country code
+country	Text	
+city	Text	
+state	Text	
+postal_code	Text	
+digital_address	Text	GhanaPost GPS, etc.
+profile_pic_url	Text	Supabase Storage URL
+cover_pic_url	Text	Supabase Storage URL
+created_at	Timestamp	Default now()
+
+
+✅ Table Name: ads (or advertisements)
+Column Name	Type	Notes / Examples
+id	UUID	Primary Key, default: uuid_generate_v4()
+user_id	UUID	FK → auth.users.id (who created the ad)
+business_name	Text	Name of advertiser or brand
+ad_title	Text	Title of the ad
+ad_description	Text	Detailed description
+target_audience	Text	E.g. "Young adults in Ghana", or JSON format
+ad_duration	Integer	In seconds or days
+ad_placements	Text[]	e.g., ["homepage", "podcast", "sidebar"]
+ad_format	Text	e.g., "image", "audio", "video", "banner"
+file_url	Text	Link to the uploaded ad file in Storage
+landing_url	Text	Link the ad should redirect to
+contact_email	Text	For inquiries
+phone_number	Text	Include country code
+status	Text	e.g., "pending", "approved", "rejected"
+start_date	Date	Optional: when to begin showing ad
+end_date	Date	Optional: when to stop showing ad
+created_at	Timestamp	Default: now()
+
+
+✅ Table Name: podcasts
+Column Name	Type	Notes / Examples
+id	UUID	Primary Key, default: uuid_generate_v4()
+user_id	UUID	FK → auth.users.id (podcast creator)
+title	Text	Podcast name
+description	Text	Summary or about section
+category	Text	e.g., "Comedy", "Music", "News", "Business"
+language	Text	e.g., "English", "Twi", "French"
+country	Text	Origin country
+cover_image_url	Text	Podcast cover art (Supabase Storage URL)
+trailer_url	Text	Optional: link to intro/trailer audio
+website_url	Text	Optional: podcast's own website
+host_name	Text	e.g., “John Doe”
+contact_email	Text	For feedback or business
+phone_number	Text	Optional
+status	Text	"draft", "published", "archived"
+created_at	Timestamp	Default: now()
+
+
+✅ Table Name: music_profiles
+This is your master table for everyone in the music industry.
+
+Column Name	Type	Notes / Examples
+id	UUID	Primary Key, default: uuid_generate_v4()
+user_id	UUID	FK → auth.users.id
+full_name	Text	Real name
+display_name	Text	Stage name / brand / alias
+roles	Text[]	e.g., ["artist", "producer", "manager", "dj"]
+category	Text	Optional group like: "Creative", "Business", "Media"
+bio	Text	Personal or professional background
+genres	Text[]	e.g., ["Hip-hop", "Afrobeats"]
+country	Text	Country of residence
+city	Text	City or region
+email	Text	Contact email
+phone_number	Text	With country code
+website_url	Text	Personal or brand website
+social_links	JSONB	{ instagram: "...", twitter: "...", soundcloud: "..." }
+profile_image_url	Text	Profile picture (Supabase Storage)
+cover_image_url	Text	Cover/banner (optional)
+portfolio_url	Text	Link to portfolio, music, EPK, etc.
+availability	Text	e.g., "open to gigs", "booked", "accepting collabs"
+verified	Boolean	To mark verified industry members
+created_at	Timestamp	Default: now()
+
+
+✅ Table Name: music_uploads
+Column Name	Type	Notes / Examples
+id	UUID	Primary Key, default: uuid_generate_v4()
+user_id	UUID	FK → auth.users.id
+music_profile_id	UUID	FK → music_profiles.id
+title	Text	Name of song, album, or file
+type	Text	song, album, playlist, beat, video, lyrics
+description	Text	Summary or background info
+file_url	Text	Main file (audio/video/zip etc) — Supabase Storage URL
+cover_image_url	Text	Optional cover art
+lyrics	Text	Text lyrics (optional)
+lyrics_file_url	Text	Optional uploaded lyrics file
+video_url	Text	Optional: music video file
+genre	Text	e.g., Afrobeats, Hiplife
+language	Text	e.g., English, Twi, Hausa
+release_date	Date	Official release date
+duration	Text	e.g., "3:45" (optional)
+is_explicit	Boolean	Content warning
+album_id	UUID	FK → music_uploads.id (self-reference for album songs)
+metadata	JSONB	{ bpm: 100, key: "C#", mood: "chill" }
+tags	Text[]	Optional: searchable tags
+credits	JSONB	{ producer: "", featured_artists: [] }
+visibility	Text	public, private, draft
+created_at	Timestamp	Default: now()
+
+✅ Table Name: content_analytics
+Column Name	Type	Notes / Examples
+id	UUID	Primary Key, default: uuid_generate_v4()
+upload_id	UUID	FK → music_uploads.id (or podcast, ad, etc.)
+user_id	UUID	FK → auth.users.id (owner of the content)
+views	Integer	Number of times viewed
+plays	Integer	Times played/streamed
+downloads	Integer	If downloadable
+likes	Integer	If you allow likes or hearts
+shares	Integer	Shared via social or embedded
+comments_count	Integer	If there's a comments feature
+country_data	JSONB	e.g. { "Ghana": 30, "Nigeria": 20 }
+platform_data	JSONB	e.g. { "web": 45, "mobile": 50 }
+updated_at	Timestamp	Auto-updated every time a stat is changed
+created_at	Timestamp	Default: now()
+
+
+
+create table user_roles (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid references auth.users(id),
+  role text, -- e.g. 'admin', 'artist', 'blogger', 'listener', 'moderator'
+  created_at timestamp default now()
+);
+
+
+create table playlists (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid references auth.users(id),
+  name text,
+  description text,
+  is_public boolean default false,
+  created_at timestamp default now()
+);
+
+create table playlist_items (
+  id uuid primary key default uuid_generate_v4(),
+  playlist_id uuid references playlists(id),
+  upload_id uuid references music_uploads(id),
+  position integer,
+  added_at timestamp default now()
+);
+
+
+
+create table tags (
+  id uuid primary key default uuid_generate_v4(),
+  name text unique
+);
+
+create table music_tags (
+  id uuid primary key default uuid_generate_v4(),
+  upload_id uuid references music_uploads(id),
+  tag_id uuid references tags(id)
+);
+
+
+
+create table notifications (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid references auth.users(id),
+  type text, -- e.g. 'upload', 'comment', 'event', 'system'
+  message text,
+  link text, -- optional, deep link to content
+  is_read boolean default false,
+  created_at timestamp default now()
+);
+
+
+
+create table transactions (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid references auth.users(id),
+  amount numeric,
+  type text, -- e.g. 'streaming', 'ad_payout', 'tip'
+  description text,
+  status text default 'pending',
+  created_at timestamp default now()
+);
+
+
+create table reports (
+  id uuid primary key default uuid_generate_v4(),
+  reported_by uuid references auth.users(id),
+  upload_id uuid references music_uploads(id),
+  reason text,
+  status text default 'open',
+  created_at timestamp default now()
+);
+
+
+
+create table comments (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid references auth.users(id),
+  upload_id uuid references music_uploads(id),
+  comment text,
+  created_at timestamp default now()
+);
+
+create table ratings (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid references auth.users(id),
+  upload_id uuid references music_uploads(id),
+  rating integer check (rating between 1 and 5),
+  created_at timestamp default now()
+);
+
+
+create table audit_logs (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid references auth.users(id),
+  action text, -- e.g. 'uploaded', 'deleted', 'edited'
+  target_table text,
+  target_id uuid,
+  created_at timestamp default now()
+);
+
+
+alter table music_uploads add column is_explicit boolean default false;
+alter table music_uploads add column language text;
+alter table music_uploads add column mood text;
+
+
+
+I'm building a full-stack website using Supabase for auth and storage, with tables for `profiles` (user details), `ads` (advertisements), and `events` (user-posted events), each linked to `auth.users.id` and protected with row-level security policies.

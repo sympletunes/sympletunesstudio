@@ -1,0 +1,419 @@
+/* ============================================= */
+/* Auth Page Styles (Sign In, Sign Up, etc.)     */
+/* ============================================= */
+
+.auth-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem 1rem; /* Padding for smaller screens */
+    background: var(--bg-primary); /* Fallback if no complex bg */
+    /* Optional: Add a subtle background pattern or gradient if desired */
+    /* background-image: linear-gradient(to bottom right, var(--bg-primary), var(--bg-secondary)); */
+}
+
+.auth-form-wrapper {
+    /* .glass-card is applied in HTML for the main card effect */
+    width: 100%;
+    max-width: 420px; /* Control the width of the form card */
+    padding: 2rem 2.5rem; /* Generous padding inside the card */
+    text-align: center;
+    animation: fadeInAuthForm 0.5s ease-out forwards;
+}
+
+@keyframes fadeInAuthForm {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* In your CSS file */
+.form-input.input-error,
+.form-select.input-error { /* If you use .form-select for select elements */
+    border-color: red !important; /* Or your theme's error color */
+    box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25); /* Optional: for more emphasis */
+}
+
+/* You might also want a specific style for error messages if not already distinct */
+.form-message.error {
+    color: red; /* Or your theme's error color */
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+}
+.form-message.success {
+    color: green; /* Or your theme's success color */
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+}
+
+.spinner-dual-ring {
+  display: inline-block;
+  width: 18px; 
+  height: 18px;
+  margin-right: 8px;
+  vertical-align: text-bottom;
+}
+.spinner-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 14px; /* Adjust size */
+  height: 14px;
+  /* margin: 1px; */
+  border-radius: 50%;
+  border: 2px solid #fff; /* Spinner color */
+  border-color: #fff transparent #fff transparent; /* Spinner color with transparent parts */
+  animation: spinner-dual-ring 1.2s linear infinite;
+}
+@keyframes spinner-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.auth-header {
+    margin-bottom: 2rem;
+}
+
+.auth-logo-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.auth-logo {
+    height: 45px; /* Adjust logo size for auth pages */
+    display: block;
+    margin: 0 auto 0.5rem auto;
+}
+
+.auth-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.auth-header p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+.auth-form .form-group {
+    margin-bottom: 1.25rem;
+    text-align: left; /* Align labels to the left */
+}
+
+.auth-form .form-input {
+    /* Styles from components.css */
+    padding: 0.85rem 1rem; /* Slightly adjusted padding if needed */
+}
+
+.forgot-password-link {
+    display: block;
+    text-align: right;
+    font-size: 0.85rem;
+    color: var(--text-accent);
+    margin-top: 0.5rem;
+    text-decoration: none;
+}
+.forgot-password-link:hover {
+    text-decoration: underline;
+}
+
+.form-actions {
+    margin-top: 1.5rem;
+}
+
+.btn-full-width {
+    width: 100%;
+    display: block; /* Ensure it takes full width */
+}
+.btn.btn-large { /* Ensure specificity or apply directly */
+    padding: 0.9rem 1.5rem; /* Adjust large button padding for auth pages */
+    font-size: 1rem;
+}
+
+.auth-separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.75rem 0;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+.auth-separator::before,
+.auth-separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border-color);
+}
+.auth-separator span {
+    padding: 0 1rem;
+}
+
+.social-login-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.btn-social {
+    /* .btn and .btn-secondary provide base styling */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    font-weight: 500;
+    color: var(--text-primary); /* Ensure text is visible on secondary bg */
+}
+.btn-social img {
+    width: 20px;
+    height: 20px;
+}
+.btn-social.btn-google:hover {
+    /* Add Google specific hover if desired, e.g., border color */
+    /* border-color: #DB4437; */
+}
+.btn-social.btn-apple:hover {
+    /* border-color: #A2AAAD; */
+}
+
+
+.auth-footer {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+.auth-footer a {
+    color: var(--text-accent);
+    font-weight: 500;
+    text-decoration: none;
+}
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* Specific styles for onboarding steps if authpage.css is used for signup too */
+.onboarding-container { /* If signup uses the same auth-page styling */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1rem;
+    margin-top: 60px;
+}
+.onboarding-wrapper { /* For the multi-step signup form */
+    /* .glass-card is applied in HTML */
+    width: 100%;
+    max-width: 650px; /* Can be wider than login */
+    padding: 2rem;
+    text-align: center;
+}
+.onboarding-header {
+    margin-bottom: 1.5rem;
+}
+.onboarding-logo {
+    height: 40px;
+    margin-bottom: 0.75rem;
+}
+.onboarding-step {
+    /* Styles for individual steps in a multi-step form */
+    animation: fadeInStep 0.4s ease-in-out;
+}
+@keyframes fadeInStep {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+.step-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+}
+.role-selection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.75rem; /* Reduced gap for denser role cards */
+    margin-bottom: 1.5rem;
+}
+.role-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 1rem 0.75rem;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px; /* Ensure consistent height */
+}
+.role-card:hover, .role-card.selected {
+    border-color: var(--text-accent);
+    background-color: rgba(var(--accent-primary-rgb, 138, 79, 255), 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(var(--accent-primary-rgb, 138, 79, 255), 0.2);
+}
+.role-card svg {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 0.75rem;
+    fill: var(--text-accent);
+}
+.role-card span {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+.role-card p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+.onboarding-form .form-group { /* More specific for onboarding forms if needed */
+    margin-bottom: 1rem;
+}
+.onboarding-wrapper .form-actions {
+    display: flex;
+    justify-content: space-between; /* For prev/next buttons */
+    margin-top: 2rem;
+}
+
+
+/* Responsive adjustments for auth pages */
+@media (max-width: 480px) {
+    .auth-form-wrapper {
+        padding: 1.5rem;
+        margin: 1rem; /* Ensure some space from screen edges */
+    }
+    .auth-header h2 {
+        font-size: 1.5rem;
+    }
+    .auth-header p {
+        font-size: 0.9rem;
+    }
+
+    .onboarding-wrapper {
+        padding: 1.5rem;
+    }
+    .role-selection-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Smaller cards for smaller screens */
+        gap: 0.5rem;
+    }
+    .role-card {
+        min-height: 100px;
+        padding: 0.75rem;
+    }
+    .role-card img { width: 28px; height: 28px; }
+    .role-card span { font-size: 0.9rem; }
+}
+
+/* css/components.css or authpage.css */
+
+.spinner {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: var(--text-on-accent, #fff); /* Use text color on primary button */
+    animation: spin 0.6s linear infinite;
+    margin-right: 0.5em;
+    vertical-align: middle;
+}
+.btn-secondary .spinner { /* Spinner for secondary buttons */
+    border-top-color: var(--text-primary);
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.form-message {
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.9rem;
+    text-align: center;
+}
+.form-message.error {
+    background-color: rgba(220, 53, 69, 0.1); /* Bootstrap danger color with alpha */
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+.form-message.success {
+    background-color: rgba(25, 135, 84, 0.1); /* Bootstrap success color with alpha */
+    color: #198754;
+    border: 1px solid rgba(25, 135, 84, 0.3);
+}
+.link-button { /* For "change email" etc. */
+    background: none;
+    border: none;
+    color: var(--text-accent);
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    font-size: inherit;
+}
+.link-button:hover {
+    color: var(--text-primary);
+}
+
+.form-note {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 1rem;
+    text-align: center;
+}
+
+/* Basic styling for OTP input if you want individual boxes look (more complex) */
+.otp-field {
+    letter-spacing: 0.5em; /* Or adjust for desired spacing */
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+/* Profile & Cover Picture Upload specific styles */
+.picture-upload-group {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+.image-uploader-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; /* For profile pic */
+    background-color: var(--bg-primary);
+    border: 2px dashed var(--border-color);
+    margin: 0 auto 0.75rem auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.image-uploader-preview.cover-preview {
+    width: 100%;
+    height: 150px; /* Adjust height for cover */
+    border-radius: var(--border-radius-md);
+}
+.image-uploader-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+.form-input-file { /* Hide actual file input */
+    display: none;
+}
+.file-upload-btn.btn-small { /* Make choose file button smaller */
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+}

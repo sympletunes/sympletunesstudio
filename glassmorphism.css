@@ -1,0 +1,92 @@
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    border: none;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.btn-primary {
+    background-color: var(--accent-primary);
+    color: var(--text-on-accent);
+}
+.btn-primary:hover {
+    background-color: var(--accent-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(138, 79, 255, 0.3);
+}
+
+.btn-secondary {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+.btn-secondary:hover {
+    background-color: var(--text-accent);
+    color: var(--text-on-accent);
+    border-color: var(--text-accent);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--text-accent);
+    border: 2px solid var(--text-accent);
+}
+.btn-outline:hover {
+    background-color: var(--text-accent);
+    color: var(--text-on-accent);
+}
+
+.btn-link-style { /* For the "For Artists", "For Advertisers" buttons */
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    font-weight: 500;
+}
+.btn-link-style:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border-color: var(--border-glass);
+}
+
+/* Icon button */
+.btn-icon {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    padding: 0.5rem;
+    border-radius: 50%;
+}
+.btn-icon:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+.btn-icon svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+.glass-card {
+    background: var(--bg-glass);
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    border-radius: var(--border-radius-lg); /* Rounded corners */
+    border: 1px solid var(--border-glass);
+    box-shadow: var(--shadow-soft); /* Soft shadow */
+    transition: var(--transition-smooth);
+    /* padding is applied by .feature-item or other specific card type classes */
+}
+
+.glass-card:hover {
+    background: var(--bg-glass-hover);
+    box-shadow: var(--shadow-medium); /* Enhanced shadow on hover */
+    transform: translateY(-5px); /* Lift effect on hover */
+}

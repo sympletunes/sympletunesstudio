@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podcaster Hub - Manage Podcasts - SympleTunes Studio</title>
+    <meta name="description" content="Create, manage, and publish your podcast series on SympleTunes Studio.">
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.png" type="image/x-icon"> <!-- UPDATE PATH -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png"> <!-- UPDATE PATH -->
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="glassmorphism.css">
+    <link rel="stylesheet" href="dashboardpage.css">
+    <link rel="stylesheet" href="podcaster-upload.css"> 
+    <link rel="stylesheet" href="responsive.css">
+
+    <!-- Font Awesome & Google Fonts -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="podcaster-upload-page">
+
+    <!-- Loading Indicator -->
+    <div id="loading-indicator" style="display: flex;">
+        <div class="spinner large"></div>
+        <p>Loading Podcaster Hub...</p>
+    </div>
+
+    <!-- Main Wrapper -->
+    <div id="podcaster-wrapper" style="display: none;">
+
+        <!-- Header (Logged-In State) -->
+        <header class="main-header glass-nav sticky-header">
+            <!-- Standard Logged-in Header Content -->
+             <div class="container header-container">
+                 <a href="index.html" class="logo"><img src="logo.png" alt="SympleTunes Logo"><span>SympleTunes Studio</span></a>
+                 <nav class="main-nav"><ul><li><a href="explore.html">Explore</a></li><li><a href="dashboard.html">Dashboard</a></li><li><a href="upload.html" class="active">Upload/Manage</a></li></ul></nav>
+                 <div class="user-actions">
+                     <button class="btn-icon notifications-btn" aria-label="Notifications"><i class="fas fa-bell"></i><span class="badge notification-count" style="display: none;">0</span></button>
+                     <div class="profile-dropdown">
+                         <button class="profile-trigger" aria-label="Profile menu"><img src="profile-picture.png" alt="My Profile" id="header-profile-pic" class="header-avatar"></button>
+                         <div class="dropdown-menu glass-element">
+                             <div class="dropdown-header"><span id="header-username">User</span><span id="header-user-email">user@email.com</span></div>
+                             <a href="profile.html" class="dropdown-item"><i class="fas fa-user"></i> My Profile</a>
+                             <a href="upload.html" class="dropdown-item active"><i class="fas fa-cloud-upload-alt"></i> Upload/Manage</a>
+                             <a href="#" class="dropdown-item" id="settings-link"><i class="fas fa-cog"></i> Account Settings</a>
+                             <hr class="dropdown-divider"><button class="dropdown-item" id="logout-button"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+                         </div>
+                     </div>
+                 </div>
+                 <button class="mobile-menu-toggle" aria-label="Open menu"><svg viewBox="0 0 100 80" width="30" height="30" fill="var(--text-primary)"><rect width="100" height="10" rx="5"></rect><rect y="30" width="100" height="10" rx="5"></rect><rect y="60" width="100" height="10" rx="5"></rect></svg></button>
+             </div>
+        </header>
+           <div class="mobile-nav-menu" id="mobileNavMenu"> <!-- Hidden by default, shown by JS -->
+        <ul>
+            <li><a href="explore.html">Explore</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="help.html">Help</a></li>
+            <li><a href="signup.html">Sign In</a></li>
+            <li><a href="upload.html"><i class="fas fa-upload"></i> Upload</a></li>
+                </ul>
+    </div>
+
+        <!-- Main Content -->
+        <main class="podcaster-hub-content">
+            <div class="container">
+
+                <!-- Section 1: Create/Edit Podcast Series Multi-Step Form -->
+                <section id="podcast-multistep-form-section" class="section-padding">
+                    <div class="form-container glass-card">
+                        <div class="form-header-inline">
+                            <i class="fas fa-podcast fa-2x form-icon"></i>
+                            <h1 class="page-title" id="podcast-form-main-title">Create New Podcast Series</h1>
+                        </div>
+                        <p class="page-subtitle" id="podcast-form-main-subtitle">Follow the steps to define your series.</p>
+                        <p id="podcast-multistep-form-message" class="form-message global-form-message" style="display:none;"></p>
+
+                        <!-- Step Indicators (Optional, can be styled with JS) -->
+                        <div class="step-indicator-container">
+                            <div class="step-indicator active" data-step="1"><span>1</span> Series Info</div>
+                            <div class="step-indicator-line"></div>
+                            <div class="step-indicator" data-step="2"><span>2</span> Host & Contact</div>
+                            <div class="step-indicator-line"></div>
+                            <div class="step-indicator" data-step="3"><span>3</span> Branding</div>
+                            <div class="step-indicator-line"></div>
+                            <div class="step-indicator" data-step="4"><span>4</span> Publish</div>
+                        </div>
+
+                        <form id="podcast-series-multistep-form">
+                            <input type="hidden" id="podcast-id" name="id"> <!-- For editing -->
+
+                            <!-- Step 1: Podcast Information -->
+                            <div class="form-step active-step" data-step-id="1">
+                                <fieldset>
+                                    <legend class="form-section-title"><i class="fas fa-info-circle"></i> Podcast Information</legend>
+                                    <div class="form-group">
+                                        <label for="podcast-title">Podcast Title / Name *</label>
+                                        <input type="text" id="podcast-title" name="title" class="form-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="podcast-description">Description / About *</label>
+                                        <textarea id="podcast-description" name="description" class="form-input" rows="5" required></textarea>
+                                    </div>
+                                    <div class="form-grid-2col">
+                                        <div class="form-group">
+                                            <label for="podcast-category">Category *</label>
+                                                                                  <select id="podcast-category" name="category" class="form-input" required>
+  <option value="">Select Category...</option>
+  <option value="Arts" data-icon="fa-paint-brush">Arts</option>
+  <option value="Automotive" data-icon="fa-car">Automotive</option>
+  <option value="Books" data-icon="fa-book">Books</option>
+  <option value="Business" data-icon="fa-briefcase">Business</option>
+  <option value="Careers" data-icon="fa-user-tie">Careers</option>
+  <option value="Comedy" data-icon="fa-laugh">Comedy</option>
+  <option value="Design" data-icon="fa-pencil-ruler">Design</option>
+  <option value="Documentary" data-icon="fa-film">Documentary</option>
+  <option value="Education" data-icon="fa-graduation-cap">Education</option>
+  <option value="Entertainment" data-icon="fa-theater-masks">Entertainment</option>
+  <option value="Fashion & Beauty" data-icon="fa-tshirt">Fashion & Beauty</option>
+  <option value="Finance" data-icon="fa-dollar-sign">Finance</option>
+  <option value="Food" data-icon="fa-utensils">Food</option>
+  <option value="Gaming" data-icon="fa-gamepad">Gaming</option>
+  <option value="Health & Fitness" data-icon="fa-dumbbell">Health & Fitness</option>
+  <option value="History" data-icon="fa-landmark">History</option>
+  <option value="Investing" data-icon="fa-chart-line">Investing</option>
+  <option value="Kids" data-icon="fa-child">Kids</option>
+  <option value="Language Learning" data-icon="fa-language">Language Learning</option>
+  <option value="Marketing" data-icon="fa-bullhorn">Marketing</option>
+  <option value="Mental Health" data-icon="fa-brain">Mental Health</option>
+  <option value="Motivation" data-icon="fa-bolt">Motivation</option>
+  <option value="Music" data-icon="fa-music">Music</option>
+  <option value="Nature" data-icon="fa-leaf">Nature</option>
+  <option value="News & Politics" data-icon="fa-newspaper">News & Politics</option>
+  <option value="Parenting" data-icon="fa-baby">Parenting</option>
+  <option value="Philosophy" data-icon="fa-balance-scale">Philosophy</option>
+  <option value="Politics & Government" data-icon="fa-university">Politics & Government</option>
+  <option value="Productivity" data-icon="fa-tasks">Productivity</option>
+  <option value="Relationships" data-icon="fa-heart">Relationships</option>
+  <option value="Science" data-icon="fa-flask">Science</option>
+  <option value="Self-Improvement" data-icon="fa-seedling">Self-Improvement</option>
+  <option value="Society & Culture" data-icon="fa-users">Society & Culture</option>
+  <option value="Spirituality" data-icon="fa-praying-hands">Spirituality</option>
+  <option value="Sports" data-icon="fa-football-ball">Sports</option>
+  <option value="Startups" data-icon="fa-rocket">Startups</option>
+  <option value="Technology" data-icon="fa-microchip">Technology</option>
+  <option value="Travel" data-icon="fa-plane">Travel</option>
+  <option value="True Crime" data-icon="fa-user-secret">True Crime</option>
+  <option value="Wilderness" data-icon="fa-tree">Wilderness</option>
+  <option value="Other" data-icon="fa-ellipsis-h">Other</option>
+</select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="podcast-language">Primary Language *</label>
+                                            <input type="text" id="podcast-language" name="language" class="form-input" required placeholder="e.g., English, Twi">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="podcast-country">Country of Origin *</label>
+                                                                          <select id="podcast-country" name="country" class="form-input" required>
+  <option value="">Select Country...</option>
+  <option value="AF">Afghanistan</option>
+  <option value="AL">Albania</option>
+  <option value="DZ">Algeria</option>
+  <option value="AD">Andorra</option>
+  <option value="AO">Angola</option>
+  <option value="AG">Antigua and Barbuda</option>
+  <option value="AR">Argentina</option>
+  <option value="AM">Armenia</option>
+  <option value="AU">Australia</option>
+  <option value="AT">Austria</option>
+  <option value="AZ">Azerbaijan</option>
+  <option value="BS">Bahamas</option>
+  <option value="BH">Bahrain</option>
+  <option value="BD">Bangladesh</option>
+  <option value="BB">Barbados</option>
+  <option value="BY">Belarus</option>
+  <option value="BE">Belgium</option>
+  <option value="BZ">Belize</option>
+  <option value="BJ">Benin</option>
+  <option value="BT">Bhutan</option>
+  <option value="BO">Bolivia</option>
+  <option value="BA">Bosnia and Herzegovina</option>
+  <option value="BW">Botswana</option>
+  <option value="BR">Brazil</option>
+  <option value="BN">Brunei</option>
+  <option value="BG">Bulgaria</option>
+  <option value="BF">Burkina Faso</option>
+  <option value="BI">Burundi</option>
+  <option value="CV">Cabo Verde</option>
+  <option value="KH">Cambodia</option>
+  <option value="CM">Cameroon</option>
+  <option value="CA">Canada</option>
+  <option value="CF">Central African Republic</option>
+  <option value="TD">Chad</option>
+  <option value="CL">Chile</option>
+  <option value="CN">China</option>
+  <option value="CO">Colombia</option>
+  <option value="KM">Comoros</option>
+  <option value="CD">Congo (DRC)</option>
+  <option value="CG">Congo (Republic)</option>
+  <option value="CR">Costa Rica</option>
+  <option value="HR">Croatia</option>
+  <option value="CU">Cuba</option>
+  <option value="CY">Cyprus</option>
+  <option value="CZ">Czech Republic</option>
+  <option value="DK">Denmark</option>
+  <option value="DJ">Djibouti</option>
+  <option value="DM">Dominica</option>
+  <option value="DO">Dominican Republic</option>
+  <option value="EC">Ecuador</option>
+  <option value="EG">Egypt</option>
+  <option value="SV">El Salvador</option>
+  <option value="GQ">Equatorial Guinea</option>
+  <option value="ER">Eritrea</option>
+  <option value="EE">Estonia</option>
+  <option value="SZ">Eswatini</option>
+  <option value="ET">Ethiopia</option>
+  <option value="FJ">Fiji</option>
+  <option value="FI">Finland</option>
+  <option value="FR">France</option>
+  <option value="GA">Gabon</option>
+  <option value="GM">Gambia</option>
+  <option value="GE">Georgia</option>
+  <option value="DE">Germany</option>
+  <option value="GH">Ghana</option>
+  <option value="GR">Greece</option>
+  <option value="GD">Grenada</option>
+  <option value="GT">Guatemala</option>
+  <option value="GN">Guinea</option>
+  <option value="GW">Guinea-Bissau</option>
+  <option value="GY">Guyana</option>
+  <option value="HT">Haiti</option>
+  <option value="HN">Honduras</option>
+  <option value="HU">Hungary</option>
+  <option value="IS">Iceland</option>
+  <option value="IN">India</option>
+  <option value="ID">Indonesia</option>
+  <option value="IR">Iran</option>
+  <option value="IQ">Iraq</option>
+  <option value="IE">Ireland</option>
+  <option value="IL">Israel</option>
+  <option value="IT">Italy</option>
+  <option value="CI">Ivory Coast</option>
+  <option value="JM">Jamaica</option>
+  <option value="JP">Japan</option>
+  <option value="JO">Jordan</option>
+  <option value="KZ">Kazakhstan</option>
+  <option value="KE">Kenya</option>
+  <option value="KI">Kiribati</option>
+  <option value="KW">Kuwait</option>
+  <option value="KG">Kyrgyzstan</option>
+  <option value="LA">Laos</option>
+  <option value="LV">Latvia</option>
+  <option value="LB">Lebanon</option>
+  <option value="LS">Lesotho</option>
+  <option value="LR">Liberia</option>
+  <option value="LY">Libya</option>
+  <option value="LI">Liechtenstein</option>
+  <option value="LT">Lithuania</option>
+  <option value="LU">Luxembourg</option>
+  <option value="MG">Madagascar</option>
+  <option value="MW">Malawi</option>
+  <option value="MY">Malaysia</option>
+  <option value="MV">Maldives</option>
+  <option value="ML">Mali</option>
+  <option value="MT">Malta</option>
+  <option value="MH">Marshall Islands</option>
+  <option value="MR">Mauritania</option>
+  <option value="MU">Mauritius</option>
+  <option value="MX">Mexico</option>
+  <option value="FM">Micronesia</option>
+  <option value="MD">Moldova</option>
+  <option value="MC">Monaco</option>
+  <option value="MN">Mongolia</option>
+  <option value="ME">Montenegro</option>
+  <option value="MA">Morocco</option>
+  <option value="MZ">Mozambique</option>
+  <option value="MM">Myanmar</option>
+  <option value="NA">Namibia</option>
+  <option value="NR">Nauru</option>
+  <option value="NP">Nepal</option>
+  <option value="NL">Netherlands</option>
+  <option value="NZ">New Zealand</option>
+  <option value="NI">Nicaragua</option>
+  <option value="NE">Niger</option>
+  <option value="NG">Nigeria</option>
+  <option value="KP">North Korea</option>
+  <option value="MK">North Macedonia</option>
+  <option value="NO">Norway</option>
+  <option value="OM">Oman</option>
+  <option value="PK">Pakistan</option>
+  <option value="PW">Palau</option>
+  <option value="PA">Panama</option>
+  <option value="PG">Papua New Guinea</option>
+  <option value="PY">Paraguay</option>
+  <option value="PE">Peru</option>
+  <option value="PH">Philippines</option>
+  <option value="PL">Poland</option>
+  <option value="PT">Portugal</option>
+  <option value="QA">Qatar</option>
+  <option value="RO">Romania</option>
+  <option value="RU">Russia</option>
+  <option value="RW">Rwanda</option>
+  <option value="KN">Saint Kitts and Nevis</option>
+  <option value="LC">Saint Lucia</option>
+  <option value="VC">Saint Vincent and the Grenadines</option>
+  <option value="WS">Samoa</option>
+  <option value="SM">San Marino</option>
+  <option value="ST">Sao Tome and Principe</option>
+  <option value="SA">Saudi Arabia</option>
+  <option value="SN">Senegal</option>
+  <option value="RS">Serbia</option>
+  <option value="SC">Seychelles</option>
+  <option value="SL">Sierra Leone</option>
+  <option value="SG">Singapore</option>
+  <option value="SK">Slovakia</option>
+  <option value="SI">Slovenia</option>
+  <option value="SB">Solomon Islands</option>
+  <option value="SO">Somalia</option>
+  <option value="ZA">South Africa</option>
+  <option value="KR">South Korea</option>
+  <option value="SS">South Sudan</option>
+  <option value="ES">Spain</option>
+  <option value="LK">Sri Lanka</option>
+  <option value="SD">Sudan</option>
+  <option value="SR">Suriname</option>
+  <option value="SE">Sweden</option>
+  <option value="CH">Switzerland</option>
+  <option value="SY">Syria</option>
+  <option value="TJ">Tajikistan</option>
+  <option value="TZ">Tanzania</option>
+  <option value="TH">Thailand</option>
+  <option value="TL">Timor-Leste</option>
+  <option value="TG">Togo</option>
+  <option value="TO">Tonga</option>
+  <option value="TT">Trinidad and Tobago</option>
+  <option value="TN">Tunisia</option>
+  <option value="TR">Turkey</option>
+  <option value="TM">Turkmenistan</option>
+  <option value="TV">Tuvalu</option>
+  <option value="UG">Uganda</option>
+  <option value="UA">Ukraine</option>
+  <option value="AE">United Arab Emirates</option>
+  <option value="GB">United Kingdom</option>
+  <option value="US">United States</option>
+  <option value="UY">Uruguay</option>
+  <option value="UZ">Uzbekistan</option>
+  <option value="VU">Vanuatu</option>
+  <option value="VA">Vatican City</option>
+  <option value="VE">Venezuela</option>
+  <option value="VN">Vietnam</option>
+  <option value="YE">Yemen</option>
+  <option value="ZM">Zambia</option>
+  <option value="ZW">Zimbabwe</option>
+</select>
+
+                                    </div>
+                                </fieldset>
+                                <div class="form-step-actions">
+                                    <button type="button" class="btn btn-primary next-step-btn">Next <i class="fas fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Host & Contact -->
+                            <div class="form-step" data-step-id="2">
+                                <fieldset>
+                                    <legend class="form-section-title"><i class="fas fa-user-tie"></i> Host & Contact</legend>
+                                    <div class="form-group">
+                                        <label for="podcast-host-name">Host Name(s) *</label>
+                                        <input type="text" id="podcast-host-name" name="host_name" class="form-input" required placeholder="e.g., Your Name or Show Name">
+                                    </div>
+                                    <div class="form-grid-2col">
+                                        <div class="form-group">
+                                            <label for="podcast-contact-email">Contact Email * (Publicly visible for inquiries)</label>
+                                            <input type="email" id="podcast-contact-email" name="contact_email" class="form-input" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="podcast-phone-number">Contact Phone (Optional)</label>
+                                            <input type="tel" id="podcast-phone-number" name="phone_number" class="form-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="podcast-website-url">Podcast Website (Optional)</label>
+                                        <input type="url" id="podcast-website-url" name="website_url" class="form-input" placeholder="https://yourpodcast.com">
+                                    </div>
+                                </fieldset>
+                                <div class="form-step-actions">
+                                    <button type="button" class="btn btn-secondary prev-step-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+                                    <button type="button" class="btn btn-primary next-step-btn">Next <i class="fas fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+
+                        <!-- Step 3: Branding & Media -->
+<div class="form-step" data-step-id="3">
+    <fieldset>
+        <legend class="form-section-title"><i class="fas fa-image"></i> Branding & Media</legend>
+
+        <!-- Cover Art Upload -->
+        <div class="form-group">
+            <label for="podcast-cover-image-input">Podcast Cover Art * (Square, min 1400x1400px, JPG/PNG, max 2MB)</label>
+            <input type="file" id="podcast-cover-image-input" name="cover_image_file" class="form-input-file" accept="image/jpeg, image/png" required>
+            <div class="image-preview-container podcast-cover-preview">
+                <img id="podcast-cover-image-preview" src="cover-photo.png" alt="Cover Art Preview">
+            </div>
+            <button type="button" class="btn btn-secondary btn-small remove-image-btn" data-target="podcast-cover-image-preview" data-input="podcast-cover-image-input" style="display:none;">Remove Cover Art</button>
+        </div>
+
+        <!-- Video Upload or Link -->
+        <div class="form-group">
+            <label for="podcast-video-upload">Promotional Video (MP4, max 20MB)</label>
+            <input type="file" id="podcast-video-upload" name="promo_video_file" class="form-input-file" accept="video/mp4">
+        </div>
+        <div class="form-group">
+            <label for="podcast-video-url">or Video URL (e.g., YouTube, Vimeo, direct MP4)</label>
+            <input type="url" id="podcast-video-url" name="promo_video_url" class="form-input" placeholder="https://yourvideo.com/video.mp4">
+        </div>
+
+        <!-- Audio Upload or Link -->
+        <div class="form-group">
+            <label for="promo-audio-upload">Promotional Audio (MP3, max 10MB)</label>
+            <input type="file" id="promo-audio-upload" name="promo_audio_file" class="form-input-file" accept="audio/mpeg">
+        </div>
+        <div class="form-group">
+            <label for="promo-audio-url">or Audio URL (e.g., SoundCloud, direct MP3)</label>
+            <input type="url" id="promo-audio-url" name="promo_audio_url" class="form-input" placeholder="https://youraudiohost.com/audio.mp3">
+        </div>
+
+    </fieldset>
+    <div class="form-step-actions">
+        <button type="button" class="btn btn-secondary prev-step-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+        <button type="button" class="btn btn-primary next-step-btn">Next <i class="fas fa-arrow-right"></i></button>
+    </div>
+</div>
+
+
+                            <!-- Step 4: Publishing Status -->
+                            <div class="form-step" data-step-id="4">
+                                <fieldset>
+                                    <legend class="form-section-title"><i class="fas fa-sliders-h"></i> Publishing Status</legend>
+                                    <div class="form-group">
+                                        <label for="podcast-status">Status *</label>
+                                        <select id="podcast-status" name="status" class="form-input" required>
+                                            <option value="draft">Draft (Save and publish later)</option>
+                                            <option value="published">Published (Make it live now)</option>
+                                            <!-- <option value="scheduled">Scheduled (Future - requires date input)</option> -->
+                                            <option value="archived">Archived (Hide from public listings)</option>
+                                        </select>
+                                    </div>
+                                    <!-- Add publish_date if 'scheduled' is an option -->
+                                    <p class="form-note">You can manage individual episodes after creating the series.</p>
+                                </fieldset>
+                                <div class="form-step-actions">
+                                    <button type="button" class="btn btn-secondary prev-step-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+                                    <button type="submit" class="btn btn-primary btn-large" id="submit-podcast-series-btn">
+                                        <i class="fas fa-check-circle"></i> Submit Series
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Section 3: Upload/Manage Episodes (NEW SECTION - Initially Hidden) -->
+                <section id="manage-episodes-section" class="section-padding" style="display: none;">
+                    <div class="form-container glass-card">
+                        <div class="form-header-inline">
+                             <i class="fas fa-microphone-alt fa-2x form-icon"></i>
+                             <div>
+                                <h1 class="page-title" id="episode-form-parent-podcast-title">Upload Episode for "[Podcast Series Name]"</h1>
+                                <button type="button" class="btn btn-small btn-outline" id="back-to-series-list-btn" style="margin-top: 0.5rem;">
+                                    <i class="fas fa-arrow-left"></i> Back to All Series
+                                </button>
+                            </div>
+                        </div>
+                        <p class="page-subtitle">Add a new episode to your selected podcast series.</p>
+                        <p id="episode-form-message" class="form-message" style="display:none;"></p>
+
+                        <form id="podcast-episode-form">
+                            <input type="hidden" id="episode-id" name="id"> <!-- For editing episode -->
+                            <input type="hidden" id="episode-parent-podcast-id" name="podcast_series_id" required>
+
+                            <fieldset>
+                                <legend class="form-section-title"><i class="fas fa-info-circle"></i> Episode Details</legend>
+                                <div class="form-grid-2col">
+                                    <div class="form-group">
+                                        <label for="episode-number">Episode Number * (e.g., 1, 2, 101)</label>
+                                        <input type="number" id="episode-number" name="episode_number" class="form-input" required min="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="episode-title">Episode Title *</label>
+                                        <input type="text" id="episode-title" name="title" class="form-input" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="episode-description">Episode Description / Show Notes</label>
+                                    <textarea id="episode-description" name="description" class="form-input" rows="4"></textarea>
+                                </div>
+                                <div class="form-group checkbox-group inline-checkbox">
+                                    <input type="checkbox" id="episode-is-explicit" name="is_explicit">
+                                    <label for="episode-is-explicit">Explicit Content?</label>
+                                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <legend class="form-section-title"><i class="fas fa-file-audio"></i> Episode Media</legend>
+                                 <div class="form-group"> <!-- Media Type Selector for Future (e.g. Video Episodes) -->
+                                    <label for="episode-media-type">Media Type *</label>
+                                    <select id="episode-media-type" name="media_type" class="form-input">
+                                        <option value="audio" selected>Audio Episode</option>
+                                        <!-- <option value="video">Video Episode</option> -->
+                                    </select>
+                                </div>
+
+                                <!-- Audio File Upload -->
+                                <div class="form-group" id="episode-audio-file-group">
+                                    <label for="episode-audio-file-input">Audio File * (MP3, WAV, AAC - Max 50MB Recommended)</label>
+                                    <input type="file" id="episode-audio-file-input" name="audio_file" class="form-input-file" accept="audio/mpeg, audio/wav, audio/aac" required>
+                                    <div id="episode-audio-file-preview" class="file-list-preview-ui bordered-list">
+                                        <p class="no-files-note">No audio file selected.</p>
+                                    </div>
+                                </div>
+                                <!-- Video File Upload (Hidden for now, can be shown based on media_type) -->
+                                <div class="form-group" id="episode-video-file-group" style="display: none;">
+                                    <label for="episode-video-file-input">Video File * (MP4, MOV)</label>
+                                    <input type="file" id="episode-video-file-input" name="video_file_episode" class="form-input-file" accept="video/mp4, video/quicktime">
+                                    <div id="episode-video-file-preview" class="file-list-preview-ui bordered-list">
+                                        <p class="no-files-note">No video file selected.</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="episode-cover-image-input">Episode Cover Art (Optional - Overrides series cover for this episode)</label>
+                                    <input type="file" id="episode-cover-image-input" name="episode_cover_file" class="form-input-file" accept="image/jpeg, image/png">
+                                    <div class="image-preview-container podcast-cover-preview"><img id="episode-cover-image-preview" src="cover-photo.png" alt="Episode Cover Preview"></div>
+                                    <button type="button" class="btn btn-secondary btn-small remove-image-btn" data-target="episode-cover-image-preview" data-input="episode-cover-image-input" style="display:none;">Remove Cover</button>
+                                </div>
+                                 <div class="form-group">
+                                    <label for="episode-duration">Episode Duration (seconds - Optional, auto-detected if possible)</label>
+                                    <input type="number" id="episode-duration" name="duration_seconds" class="form-input" min="1">
+                                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <legend class="form-section-title"><i class="fas fa-cogs"></i> Publishing Options</legend>
+                                <div class="form-grid-2col">
+                                    <div class="form-group">
+                                        <label for="episode-status">Status *</label>
+                                        <select id="episode-status" name="status" class="form-input" required>
+                                            <option value="draft">Draft</option>
+                                            <option value="published">Published</option>
+                                            <option value="scheduled">Scheduled</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" id="episode-publish-date-group">
+                                        <label for="episode-publish-date">Publish Date</label>
+                                        <input type="date" id="episode-publish-date" name="publish_date" class="form-input">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="episode-tags">Tags (Comma-separated, Optional)</label>
+                                    <input type="text" id="episode-tags" name="tags_text_episode" class="form-input" placeholder="interview, tech, season1">
+                                </div>
+                            </fieldset>
+
+                            <div class="form-actions">
+                                 <button type="button" class="btn btn-secondary" id="clear-episode-form-btn" style="display:none;">Clear Form / New Episode</button>
+                                 <button type="submit" class="btn btn-primary btn-large" id="submit-episode-btn">
+                                     <i class="fas fa-upload"></i> Save Episode
+                                 </button>
+                            </div>
+                        </form>
+                        <hr class="section-divider">
+                        <!-- List of existing episodes for the selected series -->
+                        <div id="episodes-for-series-list-section">
+                            <h3 class="section-title-sub"><i class="fas fa-list-ol"></i> Episodes in this Series</h3>
+                            <div class="episodes-grid" id="current-series-episodes-grid">
+                                <p class="status-message">Select a series to view its episodes or add a new one.</p>
+                            </div>
+                        </div>
+
+                    </div> <!-- End Episode Form Container -->
+                </section> <!-- End Manage Episodes Section -->
+
+            </div> <!-- End Container -->
+        </main>
+    </div><!-- End #podcaster-wrapper -->
+
+      <!-- Toast Notification -->
+    <div id="toast-notification" class="toast"><div class="toast-icon"><i class="fas fa-info-circle"></i></div><p class="toast-message"></p><button class="toast-close-btn" aria-label="Close">×</button></div>
+
+ <!-- Universal Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section about-symple">
+                    <h4>SympleTunes Studio</h4>
+                    <p>Empowering Creators. Fueling Culture. Your ecosystem for music and digital content.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="explore.html">Explore Content</a></li>
+                        <li><a href="signup.html#artists">For Artists</a></li>
+                        <li><a href="signup.html#advertisers">For Advertisers</a></li>
+                        <li><a href="signup.html#podcasters">For Podcasters</a></li>
+                        <!-- Add other roles like DJs, Producers etc. -->
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="https://symtech-web.github.io/SymTech/#about" target="_blank">About Us</a></li>
+                        <li><a href="https://symtech-web.github.io/SymTech/#service" target="_blank">Services</a></li>
+                        <li><a href="https://symtech-web.github.io/SymTech/#features" target="_blank">Features</a></li>
+                        <li><a href="https://symtech-web.github.io/SymTech/#contact" target="_blank">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="help.html">Help Center</a></li>
+                        <li><a href="help.html#contact-form">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© <span id="current-year">2025</span> SympleTunes Studio. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="https://web.facebook.com/profile.php?id=61567149111821" target="_blank">
+                        <?xml version="1.0" ?>
+                        <svg id="Layer_1" width="20" height="20" style="enable-background:new 0 0 64 64;" version="1.1" viewBox="0 0 64 64" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <style type="text/css">
+                                .st0{fill:none;stroke:var(--text-accent);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;}
+                            </style>
+                            <title>Facebook</title>
+                            <g>
+                                <path class="st0" d="M36.3125,26.243055h8.625v8.625002h-8.625v20.125h-8.625v-20.125h-8.625v-8.625002h8.625V22.63493v-2.417885   
+                                c0-6.198838,5.02515-11.223989,11.223991-11.223989h0.000008H44.9375v8.625h-6.037502   
+                                c-1.429035,0-2.587498,1.158463-2.587498,2.5875V26.243055z"/>
+                            </g>
+                        </svg>
+                    </a>
+                    
+                    
+                    <a href="https://www.instagram.com/sympletunes/" target="_blank">
+                        <?xml version="1.0" ?>
+                        <svg width="20" height="20" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                            <title>Instagram</title>
+                            <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/>
+                        </svg>
+                    </a>
+                    
+                    
+                    <a href="https://twitter.com/SympleTunes" target="_blank">
+                        <?xml version="1.0" ?>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14px" height="14px" viewBox="0 0 1200 1227">
+                           <title>X/Twitter</title>
+                            <g clip-path="url(#clip0_1_2)">
+                                <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="var(--text-accent)"/>
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_1_2">
+                                    <rect width="1200" height="1227" fill="var(--text-accent)"/>
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/symple-tunes-8bb825302?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
+                        <?xml version="1.0" ?>
+                        <svg enable-background="new 0 0 32 32" height="20px" width="20px" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <title>LinkedIn</title>
+                            <g id="LinkedIn">
+                                <path d="M4.983,8.875H4.94C2.657,8.875,1,7.361,1,5.275c0-2.089,1.692-3.606,4.023-3.606   c2.292,0,3.928,1.476,3.977,3.589C9,7.359,7.311,8.875,4.983,8.875z M5.023,2.669C3.243,2.669,2,3.741,2,5.275   c0,1.531,1.209,2.601,2.94,2.601h0.043C6.76,7.875,8,6.804,8,5.27C7.963,3.694,6.795,2.669,5.023,2.669z" fill="var(--text-accent)"/>
+                                <path d="M7.5,29h-5C2.224,29,2,28.776,2,28.5v-18C2,10.224,2.224,10,2.5,10h5C7.776,10,8,10.224,8,10.5v18   C8,28.776,7.776,29,7.5,29z M3,28h4V11H3V28z" fill="var(--text-accent)"/>
+                                <path d="M30.5,29h-6c-0.276,0-0.5-0.224-0.5-0.5V19c0-1.654-1.346-3-3-3s-3,1.346-3,3v9.5   c0,0.276-0.224,0.5-0.5,0.5h-6c-0.276,0-0.5-0.224-0.5-0.5v-18c0-0.276,0.224-0.5,0.5-0.5h6c0.276,0,0.5,0.224,0.5,0.5v3.014   c0,0.276-0.224,0.5-0.5,0.5s-0.5-0.224-0.5-0.5V11h-5v17h5v-9c0-2.206,1.794-4,4-4s4,1.794,4,4v9h5V17.5c0-3.584-2.916-6.5-6.5-6.5   c-1.384,0-2.722,0.406-3.871,1.173c-0.229,0.152-0.54,0.092-0.693-0.138s-0.092-0.54,0.139-0.693C20.388,10.464,21.918,10,23.5,10   c4.136,0,7.5,3.364,7.5,7.5v11C31,28.776,30.776,29,30.5,29z" fill="var(--text-accent)"/>
+                            </g>
+                        </svg>
+                    </a>
+                    <a href="https://www.youtube.com/@SympleTunes" target="_blank">
+                        <?xml version="1.0" ?>
+                        <svg height="20px" id="Layer_1" style="enable-background:new 0 0 512 512;" width="20px" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                           <title>Youtube</title>
+                            <g>
+                                <g>
+                                    <path d="M265,96c65.3,0,118.7,1.1,168.1,3.3l0.7,0h0.7c23.1,0,42,22,42,49.1v1.1l0.1,1.1c2.3,34,3.4,69.3,3.4,104.9v0v0    c0.1,35.6-1.1,70.9-3.4,104.9l-0.1,1.1v1.1c0,13.8-4.7,26.6-13.4,36.1c-7.8,8.6-18,13.4-28.6,13.4h-0.8l-0.8,0    c-52.9,2.5-108.8,3.8-166.4,3.8c-3.5,0-7.1,0-10.6,0H256h-0.1c-3.6,0-7.2,0-10.8,0c-57.8,0-113.7-1.3-166.2-3.7l-0.8,0h-0.8    c-10.6,0-20.7-4.8-28.5-13.4c-8.6-9.5-13.4-22.3-13.4-36.1v-1.1l-0.1-1.1c-2.4-34.1-3.5-69.4-3.3-104.7v-0.1v-0.1    c-0.1-35.3,1-70.5,3.3-104.6l0.1-1.1v-1.1c0-27.2,18.8-49.3,41.9-49.3H78l0.7,0c49.5-2.3,102.9-3.3,168.2-3.3h9H265 M265,64    c-3,0-6,0-9,0s-6,0-9,0c-57.6,0-114.2,0.8-169.6,3.3c-40.8,0-73.9,36.3-73.9,81.3C1,184.4-0.1,220,0,255.7    c-0.1,35.7,0.9,71.3,3.4,107c0,45,33.1,81.6,73.9,81.6c54.8,2.6,110.7,3.8,167.8,3.8c3.6,0,7.3,0,10.9,0c3.6,0,7.2,0,10.7,0    c57.1,0,113-1.2,167.9-3.8c40.9,0,74-36.6,74-81.6c2.4-35.7,3.5-71.4,3.4-107.1c0.1-35.7-1-71.3-3.4-107.1c0-45-33.1-81.1-74-81.1    C379.2,64.8,322.7,64,265,64L265,64z"/>
+                                </g>
+                                <g>
+                                    <path d="M207,353.8V157.4l145,98.2L207,353.8z"/>
+                                </g>
+                            </g>
+                        </svg>
+                    </a>
+                    <a href="https://www.snapchat.com/add/sympletunes" target="_blank">
+                        <?xml version="1.0" ?>
+                        <svg viewBox="0 0 512 512" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg">
+                           <title>Snapchat</title>
+                            <path d="M496.926,366.6c-3.373-9.176-9.8-14.086-17.112-18.153-1.376-.806-2.641-1.451-3.72-1.947-2.182-1.128-4.414-2.22-6.634-3.373-22.8-12.09-40.609-27.341-52.959-45.42a102.889,102.889,0,0,1-9.089-16.12c-1.054-3.013-1-4.724-.248-6.287a10.221,10.221,0,0,1,2.914-3.038c3.918-2.591,7.96-5.22,10.7-6.993,4.885-3.162,8.754-5.667,11.246-7.44,9.362-6.547,15.909-13.5,20-21.278a42.371,42.371,0,0,0,2.1-35.191c-6.2-16.318-21.613-26.449-40.287-26.449a55.543,55.543,0,0,0-11.718,1.24c-1.029.224-2.059.459-3.063.72.174-11.16-.074-22.94-1.066-34.534-3.522-40.758-17.794-62.123-32.674-79.16A130.167,130.167,0,0,0,332.1,36.443C309.515,23.547,283.91,17,256,17S202.6,23.547,180,36.443a129.735,129.735,0,0,0-33.281,26.783c-14.88,17.038-29.152,38.44-32.673,79.161-.992,11.594-1.24,23.435-1.079,34.533-1-.26-2.021-.5-3.051-.719a55.461,55.461,0,0,0-11.717-1.24c-18.687,0-34.125,10.131-40.3,26.449a42.423,42.423,0,0,0,2.046,35.228c4.105,7.774,10.652,14.731,20.014,21.278,2.48,1.736,6.361,4.24,11.246,7.44,2.641,1.711,6.5,4.216,10.28,6.72a11.054,11.054,0,0,1,3.3,3.311c.794,1.624.818,3.373-.36,6.6a102.02,102.02,0,0,1-8.94,15.785c-12.077,17.669-29.363,32.648-51.434,44.639C32.355,348.608,20.2,352.75,15.069,366.7c-3.868,10.528-1.339,22.506,8.494,32.6a49.137,49.137,0,0,0,12.4,9.387,134.337,134.337,0,0,0,30.342,12.139,20.024,20.024,0,0,1,6.126,2.741c3.583,3.137,3.075,7.861,7.849,14.78a34.468,34.468,0,0,0,8.977,9.127c10.019,6.919,21.278,7.353,33.207,7.811,10.776.41,22.989.881,36.939,5.481,5.778,1.91,11.78,5.605,18.736,9.92C194.842,480.951,217.707,495,255.973,495s61.292-14.123,78.118-24.428c6.907-4.24,12.872-7.9,18.489-9.758,13.949-4.613,26.163-5.072,36.939-5.481,11.928-.459,23.187-.893,33.206-7.812a34.584,34.584,0,0,0,10.218-11.16c3.434-5.84,3.348-9.919,6.572-12.771a18.971,18.971,0,0,1,5.753-2.629A134.893,134.893,0,0,0,476.02,408.71a48.344,48.344,0,0,0,13.019-10.193l.124-.149C498.389,388.5,500.708,376.867,496.926,366.6Zm-34.013,18.277c-20.745,11.458-34.533,10.23-45.259,17.137-9.114,5.865-3.72,18.513-10.342,23.076-8.134,5.617-32.177-.4-63.239,9.858-25.618,8.469-41.961,32.822-88.038,32.822s-62.036-24.3-88.076-32.884c-31-10.255-55.092-4.241-63.239-9.858-6.609-4.563-1.24-17.211-10.341-23.076-10.739-6.907-24.527-5.679-45.26-17.075-13.206-7.291-5.716-11.8-1.314-13.937,75.143-36.381,87.133-92.552,87.666-96.719.645-5.046,1.364-9.014-4.191-14.148-5.369-4.96-29.189-19.7-35.8-24.316-10.937-7.638-15.748-15.264-12.2-24.638,2.48-6.485,8.531-8.928,14.879-8.928a27.643,27.643,0,0,1,5.965.67c12,2.6,23.659,8.617,30.392,10.242a10.749,10.749,0,0,0,2.48.335c3.6,0,4.86-1.811,4.612-5.927-.768-13.132-2.628-38.725-.558-62.644,2.84-32.909,13.442-49.215,26.04-63.636,6.051-6.932,34.484-36.976,88.857-36.976s82.88,29.92,88.931,36.827c12.611,14.421,23.225,30.727,26.04,63.636,2.071,23.919.285,49.525-.558,62.644-.285,4.327,1.017,5.927,4.613,5.927a10.648,10.648,0,0,0,2.48-.335c6.745-1.624,18.4-7.638,30.4-10.242a27.641,27.641,0,0,1,5.964-.67c6.386,0,12.4,2.48,14.88,8.928,3.546,9.374-1.24,17-12.189,24.639-6.609,4.612-30.429,19.343-35.8,24.315-5.568,5.134-4.836,9.1-4.191,14.149.533,4.228,12.511,60.4,87.666,96.718C468.629,373.011,476.119,377.524,462.913,384.877Z"/>
+                        </svg>
+                    </a>
+                    <a href="https://whatsapp.com\channel/0029Vb37B6PDp2Q4UxUhH20R" target="_blank">
+                        <?xml version="1.0" ?>
+                        <svg height="20px" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" viewBox="0 0 512 512" width="20px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:serif="http://www.serif.com/" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <title>Whatsapp</title>
+                            <path d="M373.295,307.064c-6.37,-3.188 -37.687,-18.596 -43.526,-20.724c-5.838,-2.126 -10.084,-3.187 -14.331,3.188c-4.246,6.376 -16.454,20.725 -20.17,24.976c-3.715,4.251 -7.431,4.785 -13.8,1.594c-6.37,-3.187 -26.895,-9.913 -51.225,-31.616c-18.935,-16.89 -31.72,-37.749 -35.435,-44.126c-3.716,-6.377 -0.397,-9.824 2.792,-13c2.867,-2.854 6.371,-7.44 9.555,-11.16c3.186,-3.718 4.247,-6.377 6.37,-10.626c2.123,-4.252 1.062,-7.971 -0.532,-11.159c-1.591,-3.188 -14.33,-34.542 -19.638,-47.298c-5.171,-12.419 -10.422,-10.737 -14.332,-10.934c-3.711,-0.184 -7.963,-0.223 -12.208,-0.223c-4.246,0 -11.148,1.594 -16.987,7.969c-5.838,6.377 -22.293,21.789 -22.293,53.14c0,31.355 22.824,61.642 26.009,65.894c3.185,4.252 44.916,68.59 108.816,96.181c15.196,6.564 27.062,10.483 36.312,13.418c15.259,4.849 29.145,4.165 40.121,2.524c12.238,-1.827 37.686,-15.408 42.995,-30.286c5.307,-14.882 5.307,-27.635 3.715,-30.292c-1.592,-2.657 -5.838,-4.251 -12.208,-7.44m-116.224,158.693l-0.086,0c-38.022,-0.015 -75.313,-10.23 -107.845,-29.535l-7.738,-4.592l-80.194,21.037l21.405,-78.19l-5.037,-8.017c-21.211,-33.735 -32.414,-72.726 -32.397,-112.763c0.047,-116.825 95.1,-211.87 211.976,-211.87c56.595,0.019 109.795,22.088 149.801,62.139c40.005,40.05 62.023,93.286 62.001,149.902c-0.048,116.834 -95.1,211.889 -211.886,211.889m180.332,-392.224c-48.131,-48.186 -112.138,-74.735 -180.335,-74.763c-140.514,0 -254.875,114.354 -254.932,254.911c-0.018,44.932 11.72,88.786 34.03,127.448l-36.166,132.102l135.141,-35.45c37.236,20.31 79.159,31.015 121.826,31.029l0.105,0c140.499,0 254.87,-114.366 254.928,-254.925c0.026,-68.117 -26.467,-132.166 -74.597,-180.352" id="WhatsApp-Logo"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.tiktok.com/@sympletunes" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                            <title>TikTok</title>
+                            <path d="M168,106a95.9,95.9,0,0,0,56,18V84a56,56,0,0,1-56-56H128V156a28,28,0,1,1-40-25.3V89.1A68,68,0,1,0,168,156Z" 
+                                  fill="none" stroke="var(--text-accent)" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                        </svg>
+                    </a>
+                    
+                    <a href="https://t.me/sympletunes" target="_blank" title="Go to SympleTunes Telegram">
+                        <svg width="20" height="20" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                            <title>Telegram</title>
+                            <path d="M88,134.9,177.9,214a8,8,0,0,0,13.1-4.2L228.6,45.6a8,8,0,0,0-10.7-9.2L33.3,108.9c-7.4,2.9-6.4,13.7,1.4,15.3Z" 
+                                  fill="none" stroke="var(--text-accent)" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+                            <line x1="88" y1="134.9" x2="224.1" y2="36.6" fill="none" stroke="var(--text-accent)" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+                            <path d="M132.9,174.4l-31.2,31.2A8,8,0,0,1,88,200V134.9" 
+                                  fill="none" stroke="var(--text-accent)" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="legal-links">
+                    <a href="policy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <center>        <p>Designed by <a href="https://symtech-web.github.io/SymTech/" target="_blank">SymTech Web</a></p>
+        </center>
+    </footer>
+
+    <!-- Supabase & JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="supabase-client.js"></script>
+    <script src="main.js"></script>
+    <script type="text/javascript"> emailjs.init({ publicKey: "Lpz71QeKM2FwOgoV0" }); </script>
+    <script src="podcaster-upload.js"></script>
+
+</body>
+</html>

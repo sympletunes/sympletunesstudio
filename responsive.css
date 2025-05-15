@@ -1,0 +1,232 @@
+/* ============================================= */
+/* Homepage Specific Styles                      */
+/* ============================================= */
+
+/* Hero Section Styles */
+.hero-section {
+    min-height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column; /* Stack content and role buttons */
+    align-items: center;
+    justify-content: center; /* Vertically center main content */
+    position: relative;
+    padding-top: 80px; /* Account for sticky header height */
+    padding-bottom: 2rem;
+    background-image: url('../assets/images/hero-bg-placeholder.jpg'); /* Replace with your actual hero background */
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: var(--text-primary); /* Default text color for hero */
+    text-align: center;
+}
+
+.hero-background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Example: Darker overlay + subtle gradient for depth */
+    background: linear-gradient(to bottom, rgba(var(--bg-primary-rgb, 13, 13, 18), 0.7) 0%, rgba(var(--bg-primary-rgb, 13, 13, 18), 0.9) 70%, var(--bg-primary) 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative; /* Above overlay */
+    z-index: 2;
+    max-width: 800px; /* Limit width of hero text */
+    margin-bottom: 3rem; /* Space before role buttons */
+}
+
+.hero-tagline {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+    /* Optional: Text gradient for tagline */
+    /* background: linear-gradient(to right, var(--text-accent), #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+}
+
+.hero-subtagline {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+}
+.hero-cta-buttons .btn {
+    min-width: 180px; /* Give buttons some minimum width */
+}
+
+/* Hero Role Buttons Container */
+.hero-role-buttons-container {
+    position: relative; /* Above overlay */
+    z-index: 2;
+    width: 100%;
+    margin-top: auto; /* Pushes this section towards the bottom if hero is taller */
+    padding-bottom: 2rem; /* Some padding from the very bottom */
+}
+.hero-role-buttons-container .container {
+    /* Optional: apply a glass effect to the container of role buttons */
+    /* background: rgba(26, 26, 35, 0.3);
+    backdrop-filter: blur(8px);
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--border-glass); */
+}
+
+.role-buttons-prompt {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.role-buttons-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+}
+.role-buttons-grid .btn-link-style {
+    flex-grow: 1; /* Allow buttons to grow if few */
+    max-width: 180px; /* Max width per button */
+    min-width: 140px;
+}
+
+/* Features Section Styles */
+.features-section {
+    background-color: var(--bg-primary); /* Or slightly different if needed */
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.section-title { /* General section title used across pages */
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+.section-title.text-center {
+    margin-bottom: 3rem; /* More space after centered titles */
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.feature-item { /* .glass-card is applied in HTML for the glass effect */
+    padding: 2rem 1.5rem; /* Custom padding if needed beyond glass-card */
+    text-align: left; /* Default text align for feature items */
+}
+.feature-item .feature-icon {
+    /* Defined in components.css, ensure path is correct */
+    margin-bottom: 1.5rem; /* More space below icon */
+}
+.feature-item h3 {
+    /* Defined in components.css */
+    font-size: 1.3rem; /* Slightly larger for homepage features */
+}
+
+
+/* Call to Action (CTA) Section Styles */
+.cta-section {
+    background-color: var(--bg-secondary);
+    text-align: center;
+    padding: 3rem 1.5rem; /* Adjust padding for the glass element */
+}
+
+.cta-section .section-title {
+    margin-bottom: 1rem;
+}
+
+.cta-section p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+    line-height: 1.7;
+}
+.cta-section .btn {
+    min-width: 200px;
+}
+
+/* Responsive Adjustments for Homepage */
+@media (max-width: 768px) {
+    .hero-tagline {
+        font-size: 2.2rem; /* Smaller tagline on mobile */
+    }
+    .hero-subtagline {
+        font-size: 1rem;
+    }
+    .hero-cta-buttons .btn {
+        width: 100%; /* Make CTA buttons full width on small screens */
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .role-buttons-grid .btn-link-style {
+        min-width: calc(50% - 0.5rem); /* Two buttons per row */
+        max-width: calc(50% - 0.5rem);
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+    .features-grid {
+        gap: 1.5rem;
+    }
+    .feature-item {
+        padding: 1.5rem;
+    }
+    .cta-section p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-tagline {
+        font-size: 1.8rem;
+    }
+    .hero-role-buttons-container {
+        padding-bottom: 1rem;
+    }
+    .role-buttons-prompt {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+    .role-buttons-grid .btn-link-style {
+        width: 100%; /* One button per row on very small screens */
+        max-width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    .hero-cta-buttons {
+        gap: 0.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-sidebar {
+      display: none;
+    }
+  
+    .dashboard-content {
+      margin-left: 0 !important; /* Remove space reserved for sidebar */
+    }
+  }
+  

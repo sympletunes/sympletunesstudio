@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Artist Profile - SympleTunes Studio</title>
+    <meta name="description" content="Complete your detailed artist profile on SympleTunes Studio.">
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.png" type="image/x-icon"> <!-- UPDATE PATH -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png"> <!-- UPDATE PATH -->
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="glassmorphism.css">
+    <link rel="stylesheet" href="dashboardpage.css">
+    <link rel="stylesheet" href="artist-profile-form.css"> <!-- NEW Specific CSS -->
+    <link rel="stylesheet" href="responsive.css">
+
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="artist-profile-form-page">
+
+    <!-- Loading Indicator -->
+    <div id="loading-indicator">
+        <div class="spinner large"></div>
+        <p>Loading Profile Form...</p>
+    </div>
+
+    <!-- Main Wrapper -->
+    <div id="artist-profile-wrapper" style="display: none;">
+
+        <!-- Header (Logged-In State) -->
+        <header class="main-header glass-nav sticky-header">
+            <!-- Standard Logged-in Header Content -->
+            <div class="container header-container">
+                <a href="index.html" class="logo"><img src="logo.png" alt="SympleTunes Logo"><span>SympleTunes Studio</span></a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="explore.html">Explore</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="upload.html" class="active">Manage Profile/Upload</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                    <!-- Notifications, Profile Dropdown... -->
+                     <button class="btn-icon notifications-btn" aria-label="Notifications"><i class="fas fa-bell"></i><span class="badge notification-count" style="display: none;">0</span></button>
+                     <div class="profile-dropdown">
+                         <button class="profile-trigger" aria-label="Profile menu"><img src="profile-placeholder.png" alt="My Profile" id="header-profile-pic" class="header-avatar"></button>
+                         <div class="dropdown-menu glass-element">
+                             <div class="dropdown-header"><span id="header-username">User Name</span><span id="header-user-email">user@email.com</span></div>
+                             <a href="profile.html" class="dropdown-item"><i class="fas fa-user"></i> My Profile</a>
+                             <a href="upload.html" class="dropdown-item active"><i class="fas fa-cloud-upload-alt"></i> Upload/Manage</a>
+                             <a href="#" class="dropdown-item" id="settings-link"><i class="fas fa-cog"></i> Account Settings</a>
+                             <hr class="dropdown-divider">
+                             <button class="dropdown-item" id="logout-button"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+                         </div>
+                     </div>
+                 </div>
+                <button class="mobile-menu-toggle" aria-label="Open menu"><svg viewBox="0 0 100 80" width="30" height="30" fill="var(--text-primary)"><rect width="100" height="10" rx="5"></rect><rect y="30" width="100" height="10" rx="5"></rect><rect y="60" width="100" height="10" rx="5"></rect></svg></button>
+            </div>
+        </header>
+        <div class="mobile-nav-menu" id="mobileNavMenu">
+            <ul>
+               <li><a href="explore.html">Explore</a></li>
+               <li><a href="dashboard.html">Dashboard</a></li>
+               <li><a href="upload.html">Upload</a></li>
+               <li><a href="profile.html">My Profile</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><button class="btn btn-secondary" id="mobile-logout-button">Sign Out</button></li>
+           </ul>
+        </div>
+        <!-- Main Content -->
+        <main class="artist-profile-form-content">
+            <div class="container">
+                <!-- Step 1: Terms (If you still want this before this detailed form) -->
+                <section id="terms-step-artist" class="form-step active-step section-padding">
+                    <div class="step-container glass-card text-center">
+                        <i class="fas fa-scroll fa-3x step-icon"></i>
+                        <h1 class="page-title">Artist & Contributor Agreement</h1>
+                        <p class="page-subtitle">Review and agree to our terms before completing your industry profile.</p>
+                        <div class="terms-box">
+                            <p>Content uploaded must be original or you must have explicit rights. All profile information must be accurate. SympleTunes Studio is not responsible for copyright infringements by users...</p>
+                            <p>By proceeding, you agree to the <a href="/legal/contributor-agreement.html" target="_blank">Full Contributor Agreement</a> and <a href="/legal/terms.html" target="_blank">Terms of Service</a>.</p>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="agree-artist-terms-checkbox" name="agree_artist_terms" required>
+                            <label for="agree-artist-terms-checkbox">I have read and agree to the Contributor Agreement and Terms of Service.</label>
+                        </div>
+                        <button id="proceed-to-profile-form-btn" class="btn btn-primary btn-large" disabled>Agree & Complete Profile</button>
+                        <p class="form-note"><a href="dashboard.html">← Back to Dashboard</a></p>
+                    </div>
+                </section>
+
+                <!-- Step 2: The Main Profile Form (Hidden initially) -->
+                <section id="artist-profile-form-step" class="form-step section-padding" style="display: none;">
+                    <form id="music-industry-profile-form" class="glass-card main-profile-form">
+                        <div class="form-header">
+                             <i class="fas fa-user-astronaut fa-3x step-icon"></i>
+                             <h1 class="page-title">Complete Your Artist Profile</h1>
+                             <p class="page-subtitle">Provide detailed information to enhance your presence and opportunities.</p>
+                        </div>
+                        <p id="form-submission-message" class="form-message" style="display:none;"></p>
+
+                        <!-- SECTION: General Info (Auto-filled, Editable) -->
+                        <fieldset>
+                            <legend class="form-section-title"><i class="fas fa-user-circle"></i> General Information</legend>
+                            <div class="form-grid-2col">
+                                <div class="form-group">
+                                    <label for="profile-first-name">First Name *</label>
+                                    <input type="text" id="profile-first-name" name="first_name" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-last-name">Last Name *</label>
+                                    <input type="text" id="profile-last-name" name="last_name" class="form-input" required>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label for="profile-email">Email (Cannot be changed here) *</label>
+                                <input type="email" id="profile-email" name="email" class="form-input" required readonly disabled>
+                            </div>
+                             <div class="form-grid-2col">
+                                <div class="form-group">
+                                    <label for="profile-phone-number">Phone Number *</label>
+                                    <input type="tel" id="profile-phone-number" name="phone_number" class="form-input" required placeholder="+CountryCode Number">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-dob">Date of Birth *</label>
+                                    <input type="date" id="profile-dob" name="dob" class="form-input" required>
+                                </div>
+                            </div>
+                             <div class="form-grid-2col">
+                                <div class="form-group">
+                                    <label for="profile-gender">Gender *</label>
+                                    <select id="profile-gender" name="gender" class="form-input" required>
+                                        <option value="">Select Gender...</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Non-binary">Non-binary</option>
+                                        <option value="Other">Other</option>
+                                        <option value="Prefer not to say">Prefer not to say</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-nationality">Nationality *</label>
+                                    <input type="text" id="profile-nationality" name="nationality" class="form-input" required>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- SECTION: Role -->
+                        <fieldset>
+                            <legend class="form-section-title"><i class="fas fa-briefcase"></i> Professional Role</legend>
+                            <div class="form-group">
+                                <label for="profile-primary-role">Primary Role *</label>
+                                <select id="profile-primary-role" name="primary_role" class="form-input" required>
+                                    <option value="">Select Primary Role...</option>
+                                    <option value="Artist">Artist (Musician, Vocalist)</option>
+                                    <option value="DJ">DJ</option>
+                                    <option value="Producer">Producer</option>
+                                    <option value="Sound Engineer">Sound Engineer</option>
+                                    <option value="Blogger">Blogger / Writer</option>
+                                    <option value="Podcaster">Podcaster</option>
+                                    <option value="Advertiser">Advertiser / Brand</option>
+                                    <option value="Event Organizer">Event Organizer</option>
+                                    <!-- Add more roles -->
+                                </select>
+                            </div>
+                           <!-- Stage Name Input -->
+<div class="form-group">
+    <label for="profile-stage-name">Stage Name *</label>
+    <p class="form-note">Enter the name you perform or release music under.</p>
+    <input
+      type="text"
+      id="profile-stage-name"
+      name="display_name"
+      class="form-input"
+      placeholder="e.g. SympleTunes"
+      required
+    >
+  </div>
+  
+  
+                            <div class="form-group">
+                                <label>Other Roles (Select all that apply)</label>
+                                <div class="checkbox-options-grid">
+                                    <label><input type="checkbox" name="other_roles" value="Songwriter"> Songwriter</label>
+                                    <label><input type="checkbox" name="other_roles" value="Composer"> Composer</label>
+                                    <label><input type="checkbox" name="other_roles" value="Lyricist"> Lyricist</label>
+                                    <label><input type="checkbox" name="other_roles" value="Session Musician"> Session Musician</label>
+                                    <label><input type="checkbox" name="other_roles" value="Label Representative"> Label Representative</label>
+                                    <label><input type="checkbox" name="other_roles" value="Music Supervisor"> Music Supervisor</label>
+                                     <!-- Add more -->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="profile-affiliations">Affiliations (e.g., Labels, PROs, Groups - comma-separated)</label>
+                                <input type="text" id="profile-affiliations" name="affiliations" class="form-input" maxlength="100" placeholder="Warner Music, ASCAP, My Band">
+                            </div>
+                        </fieldset>
+
+                     <!-- SECTION: Profile & Media -->
+<fieldset>
+    <legend class="form-section-title">
+      <i class="fas fa-photo-video"></i> Profile & Media Presence
+    </legend>
+  
+   <!-- Cover Image Upload -->
+<div class="form-group">
+    <label for="profile-cover-image">Cover Image *</label>
+    <p class="form-note">Recommended: 1600×400px, JPG/PNG/WEBP, max 2MB</p>
+    <input
+      type="file"
+      id="profile-cover-image"
+      name="cover_image_url"
+      class="form-input-file"
+      accept="image/jpeg, image/png, image/webp"
+    >
+    <div id="cover-image-preview" class="preview-box" aria-live="polite">
+      <!-- JS will inject <img> here when a file is selected -->
+    </div>
+  </div>
+  
+  <!-- Music Files Upload -->
+  <div class="form-group" id="music-files-upload-group">
+    <label for="profile-music-files">Music Files *</label>
+    <p class="form-note">Upload at least 2 tracks (MP3, WAV; max 20MB each)</p>
+    <input
+      type="file"
+      id="profile-music-files"
+      name="music_files"
+      class="form-input-file"
+      accept="audio/mpeg, audio/wav"
+      multiple
+    >
+    <div id="music-files-list" class="file-list-preview-ui bordered-list" aria-live="polite">
+      <p class="no-files-note">No music files selected yet.</p>
+    </div>
+  </div>
+  
+  
+    <!-- Featured Video Upload or Embed -->
+    <div class="form-group" id="video-upload-group">
+      <label>Featured Video (optional)</label>
+      <p class="form-note">Upload MP4 (max 50MB) or embed YouTube/Vimeo URL</p>
+  
+      <div class="video-option-toggle">
+        <button
+          type="button"
+          class="btn btn-small btn-toggle active"
+          data-video-option="upload"
+        >Upload File</button>
+        <button
+          type="button"
+          class="btn btn-small btn-toggle"
+          data-video-option="url"
+        >Embed URL</button>
+      </div>
+  
+      <input
+        type="file"
+        id="profile-video-file"
+        name="video_file"
+        class="form-input-file video-option-content"
+        accept="video/mp4"
+        style="display: block;"
+      >
+      <input
+        type="url"
+        id="profile-video-url-embed"
+        name="video_url"
+        class="form-input video-option-content"
+        placeholder="https://youtube.com/watch?v=..."
+        style="display: none;"
+      >
+  
+      <div id="video-file-list" class="file-list-preview-ui bordered-list" aria-live="polite">
+        <p class="no-files-note">No video selected or URL provided.</p>
+      </div>
+    </div>
+  
+    <!-- Portfolio & Social Links -->
+    <div class="form-group">
+      <label for="profile-portfolio-urls">Portfolio Links *</label>
+      <p class="form-note">Min. 2 links (e.g., Spotify, SoundCloud, personal site)</p>
+      <textarea
+        id="profile-portfolio-urls"
+        name="portfolio_url"
+        class="form-input"
+        rows="3"
+        required
+        placeholder="https://spotify.com/artist/..., https://soundcloud.com/yourname, yourwebsite.com"
+      ></textarea>
+    </div>
+  
+    <div class="form-group">
+      <label for="profile-social-media-links">Social Media Links *</label>
+      <p class="form-note">Min. 2 links (comma-separated)</p>
+      <textarea
+        id="profile-social-media-links"
+        name="social_media_links"
+        class="form-input"
+        rows="3"
+        required
+        placeholder="https://instagram.com/..., https://twitter.com/..."
+      ></textarea>
+    </div>
+  </fieldset>
+  
+
+                        <!-- SECTION: Portfolio (Bio, Skills, etc.) -->
+                        <fieldset>
+                            <legend class="form-section-title"><i class="fas fa-book-open"></i> Portfolio & Details</legend>
+                            <div class="form-group">
+                                <label for="profile-bio">Bio / About Me * (Min. 150 words)</label>
+                                <textarea id="profile-bio" name="bio" class="form-input" rows="8" required minlength="150"></textarea>
+                                <p class="form-note text-right"><span id="bio-word-count">0</span>/150 words</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="profile-skills">Skills * (Comma-separated - e.g., Vocals, Guitar, Mixing, Songwriting)</label>
+                                <input type="text" id="profile-skills" name="skills" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="profile-certifications">Certifications (Optional - Comma-separated)</label>
+                                <input type="text" id="profile-certifications" name="certifications" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="profile-collaborations">Past Collaborations * (Min. 1 - Comma-separated names/projects)</label>
+                                <input type="text" id="profile-collaborations" name="collaborations" class="form-input" required>
+                            </div>
+                             <div class="form-group">
+                                <label for="profile-availability">Availability for Bookings/Collaborations *</label>
+                                <textarea id="profile-availability" name="availability" class="form-input" rows="3" required placeholder="e.g., Weekends, Studio sessions on weekdays, Available for touring starting June..."></textarea>
+                            </div>
+                        </fieldset>
+
+
+                        <!-- SECTION: Distribution (Conditional based on role or an advanced section) -->
+                        <fieldset id="distribution-fieldset" class="optional-section">
+                            <legend class="form-section-title"><i class="fas fa-satellite-dish"></i> Distribution Details (If applicable)</legend>
+                            <div class="form-group">
+                                <label for="profile-artist-type">Artist Type *</label>
+                                <select id="profile-artist-type" name="artist_type" class="form-input" required>
+                                    <option value="Independent">Independent</option>
+                                    <option value="Signed">Signed to Label</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="profile-featured-artist">Are you often a Featured Artist?</label>
+                                <select id="profile-featured-artist" name="featured_artist" class="form-input">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="feature-name-group" style="display:none;">
+                                <label for="profile-feature-name">Typical Feature Name (e.g., "feat. YourName")</label>
+                                <input type="text" id="profile-feature-name" name="feature_name" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="profile-distributor-name">Distributor Name (e.g., DistroKid, TuneCore - Optional)</label>
+                                <input type="text" id="profile-distributor-name" name="distributor_name" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label>Distribution Channels (Optional - Select all that apply)</label>
+                                <div class="checkbox-options-grid">
+                                    <label><input type="checkbox" name="distribution_channels" value="Spotify"> Spotify</label>
+                                    <label><input type="checkbox" name="distribution_channels" value="Apple Music"> Apple Music</label>
+                                    <label><input type="checkbox" name="distribution_channels" value="YouTube Music"> YouTube Music</label>
+                                    <label><input type="checkbox" name="distribution_channels" value="Amazon Music"> Amazon Music</label>
+                                    <label><input type="checkbox" name="distribution_channels" value="Deezer"> Deezer</label>
+                                    <label><input type="checkbox" name="distribution_channels" value="Tidal"> Tidal</label>
+                                     <label><input type="checkbox" name="distribution_channels" value="Physical"> Physical (CD/Vinyl)</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Specialized Genres (Optional - Comma-separated)</label>
+                                <input type="text" id="profile-specialized-genres" name="specialized_genres" class="form-input" placeholder="Afrobeat, Highlife, Jazz Fusion">
+                            </div>
+                            <div class="form-group">
+                                <label>Regions Covered for Distribution/Performance (Optional - Comma-separated)</label>
+                                <input type="text" id="profile-regions-covered" name="regions_covered" class="form-input" placeholder="West Africa, Europe, Global">
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" id="profile-music-rights" name="music_rights_confirmed" required>
+                                <label for="profile-music-rights">I confirm I own or have the necessary rights to distribute and perform all music I upload/link. *</label>
+                            </div>
+                        </fieldset>
+
+                        <!-- SECTION: Emergency & Communication -->
+                        <fieldset>
+                             <legend class="form-section-title"><i class="fas fa-address-book"></i> Emergency & Communication</legend>
+                             <div class="form-grid-2col">
+                                <div class="form-group">
+                                    <label for="profile-emergency-contact-name">Emergency Contact Name *</label>
+                                    <input type="text" id="profile-emergency-contact-name" name="emergency_contact_name" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-emergency-relationship">Relationship to You *</label>
+                                    <input type="text" id="profile-emergency-relationship" name="emergency_relationship" class="form-input" required placeholder="e.g., Manager, Spouse, Sibling">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="profile-emergency-phone">Emergency Contact Phone *</label>
+                                <input type="tel" id="profile-emergency-phone" name="emergency_phone" class="form-input" required placeholder="+CountryCode Number">
+                            </div>
+                            <div class="form-group">
+                                <label>Languages Spoken * (Select at least one)</label>
+                                <div class="checkbox-options-grid">
+                                     <label><input type="checkbox" name="languages" value="English"> English</label>
+                                     <label><input type="checkbox" name="languages" value="French"> French</label>
+                                     <label><input type="checkbox" name="languages" value="Spanish"> Spanish</label>
+                                     <label><input type="checkbox" name="languages" value="Twi"> Twi</label>
+                                     <label><input type="checkbox" name="languages" value="Ewe"> Ewe</label>
+                                     <label><input type="checkbox" name="languages" value="Ga"> Ga</label>
+                                     <label><input type="checkbox" name="languages" value="Other"> Other (Specify below)</label>
+                                </div>
+                            </div>
+                            <div class="form-group" id="other-language-group" style="display:none;">
+                                <label for="profile-other-language">Other Language(s) (Specify)</label>
+                                <input type="text" id="profile-other-language" name="other_language" class="form-input">
+                            </div>
+                             <div class="form-grid-2col">
+                                <div class="form-group">
+                                    <label for="profile-communication-method">Preferred Communication *</label>
+                                    <select id="profile-communication-method" name="communication_method" class="form-input" required>
+                                        <option value="Email">Email</option>
+                                        <option value="Phone">Phone Call</option>
+                                        <option value="WhatsApp">WhatsApp</option>
+                                        <option value="SympleTunes Chat">SympleTunes Chat (if available)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-time-zone">Your Time Zone *</label>
+                                    <select id="profile-time-zone" name="time_zone" class="form-input" required>
+                                        <option value="">Select Time Zone...</option>
+                                        <!-- Populate with time zones (JS or static) -->
+                                        <option value="UTC+0">GMT / UTC+0</option>
+                                        <option value="UTC-5">EST / UTC-5</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-grid-2col">
+                                <div class="form-group">
+                                    <label for="profile-relocation">Willing to Relocate for Opportunities?</label>
+                                    <select id="profile-relocation" name="relocation" class="form-input">
+                                        <option value="">Select...</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                        <option value="Maybe">Maybe (Depends on opportunity)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-work-availability">Work Availability *</label>
+                                    <select id="profile-work-availability" name="work_availability" class="form-input" required>
+                                        <option value="Full-time">Full-time</option>
+                                        <option value="Part-time">Part-time</option>
+                                        <option value="Freelance/Contract">Freelance/Contract</option>
+                                        <option value="Weekends Only">Weekends Only</option>
+                                    </select>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label for="profile-health-considerations">Health Considerations or Allergies (Optional - for events/touring)</label>
+                                <textarea id="profile-health-considerations" name="health_considerations" class="form-input" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="profile-additional-notes">Additional Notes (Optional)</label>
+                                <textarea id="profile-additional-notes" name="additional_notes" class="form-input" rows="3"></textarea>
+                            </div>
+                        </fieldset>
+
+                        <!-- Form Actions -->
+                        <div class="form-actions main-form-actions">
+                            <button type="button" class="btn btn-secondary" id="back-to-terms-artist-btn">Back to Agreement</button>
+                            <button type="submit" id="submit-artist-profile-btn" class="btn btn-primary btn-large">
+                                <i class="fas fa-paper-plane"></i> Submit Form
+                              </button>
+                              
+                        </div>
+                    </form>
+                </section>
+
+            </div> <!-- End Container -->
+            <!-- Success Modal -->
+<div id="success-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close modal">&times;</button>
+      <h2>Thank You!</h2>
+      <p>We’ve received your artist profile details.</p>
+      <p>Our team is reviewing your submission and will notify you when it’s approved.</p>
+      <p>An email confirmation has been sent to you.</p>
+      <button id="modal-ok-btn" class="btn btn-primary">OK</button>
+    </div>
+  </div>
+  
+        </main> <!-- End Artist Profile Form Content -->
+    </div><!-- End #artist-profile-wrapper -->
+
+  <!-- Universal Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section about-symple">
+                    <h4>SympleTunes Studio</h4>
+                    <p>Empowering Creators. Fueling Culture. Your ecosystem for music and digital content.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="explore.html">Explore Content</a></li>
+                        <li><a href="signup.html#artists">For Artists</a></li>
+                        <li><a href="signup.html#advertisers">For Advertisers</a></li>
+                        <li><a href="signup.html#podcasters">For Podcasters</a></li>
+                        <!-- Add other roles like DJs, Producers etc. -->
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="https://symtech-web.github.io/SymTech/#about" target="_blank">About Us</a></li>
+                        <li><a href="https://symtech-web.github.io/SymTech/#service" target="_blank">Services</a></li>
+                        <li><a href="https://symtech-web.github.io/SymTech/#features" target="_blank">Features</a></li>
+                        <li><a href="https://symtech-web.github.io/SymTech/#contact" target="_blank">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="help.html">Help Center</a></li>
+                        <li><a href="help.html#contact-form">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© <span id="current-year">2025</span> SympleTunes Studio. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="https://web.facebook.com/profile.php?id=61567149111821" target="_blank">
+                        <?xml version="1.0" ?>
+                        <svg id="Layer_1" width="20" height="20" style="enable-background:new 0 0 64 64;" version="1.1" viewBox="0 0 64 64" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <style type="text/css">
+                                .st0{fill:none;stroke:var(--text-accent);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;}
+                            </style>
+                            <title>Facebook</title>
+                            <g>
+                                <path class="st0" d="M36.3125,26.243055h8.625v8.625002h-8.625v20.125h-8.625v-20.125h-8.625v-8.625002h8.625V22.63493v-2.417885   
+                                c0-6.198838,5.02515-11.223989,11.223991-11.223989h0.000008H44.9375v8.625h-6.037502   
+                                c-1.429035,0-2.587498,1.158463-2.587498,2.5875V26.243055z"/>
+                            </g>
+                        </svg>
+                    </a>
+                    
+                    
+                    <a href="https://www.instagram.com/sympletunes/" target="_blank">
+                        <?xml version="1.0" ?>
+                        <svg width="20" height="20" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                            <title>Instagram</title>
+                            <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/>
+                        </svg>
+                    </a>
+                    
+                    
+                    <a href="https://twitter.com/SympleTunes" target="_blank">
+                        <?xml version="1.0" ?>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14px" height="14px" viewBox="0 0 1200 1227">
+                           <title>X/Twitter</title>
+                            <g clip-path="url(#clip0_1_2)">
+                                <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="var(--text-accent)"/>
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_1_2">
+                                    <rect width="1200" height="1227" fill="var(--text-accent)"/>
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/symple-tunes-8bb825302?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
+                        <?xml version="1.0" ?>
+                        <svg enable-background="new 0 0 32 32" height="20px" width="20px" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <title>LinkedIn</title>
+                            <g id="LinkedIn">
+                                <path d="M4.983,8.875H4.94C2.657,8.875,1,7.361,1,5.275c0-2.089,1.692-3.606,4.023-3.606   c2.292,0,3.928,1.476,3.977,3.589C9,7.359,7.311,8.875,4.983,8.875z M5.023,2.669C3.243,2.669,2,3.741,2,5.275   c0,1.531,1.209,2.601,2.94,2.601h0.043C6.76,7.875,8,6.804,8,5.27C7.963,3.694,6.795,2.669,5.023,2.669z" fill="var(--text-accent)"/>
+                                <path d="M7.5,29h-5C2.224,29,2,28.776,2,28.5v-18C2,10.224,2.224,10,2.5,10h5C7.776,10,8,10.224,8,10.5v18   C8,28.776,7.776,29,7.5,29z M3,28h4V11H3V28z" fill="var(--text-accent)"/>
+                                <path d="M30.5,29h-6c-0.276,0-0.5-0.224-0.5-0.5V19c0-1.654-1.346-3-3-3s-3,1.346-3,3v9.5   c0,0.276-0.224,0.5-0.5,0.5h-6c-0.276,0-0.5-0.224-0.5-0.5v-18c0-0.276,0.224-0.5,0.5-0.5h6c0.276,0,0.5,0.224,0.5,0.5v3.014   c0,0.276-0.224,0.5-0.5,0.5s-0.5-0.224-0.5-0.5V11h-5v17h5v-9c0-2.206,1.794-4,4-4s4,1.794,4,4v9h5V17.5c0-3.584-2.916-6.5-6.5-6.5   c-1.384,0-2.722,0.406-3.871,1.173c-0.229,0.152-0.54,0.092-0.693-0.138s-0.092-0.54,0.139-0.693C20.388,10.464,21.918,10,23.5,10   c4.136,0,7.5,3.364,7.5,7.5v11C31,28.776,30.776,29,30.5,29z" fill="var(--text-accent)"/>
+                            </g>
+                        </svg>
+                    </a>
+                    <a href="https://www.youtube.com/@SympleTunes" target="_blank">
+                        <?xml version="1.0" ?>
+                        <svg height="20px" id="Layer_1" style="enable-background:new 0 0 512 512;" width="20px" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                           <title>Youtube</title>
+                            <g>
+                                <g>
+                                    <path d="M265,96c65.3,0,118.7,1.1,168.1,3.3l0.7,0h0.7c23.1,0,42,22,42,49.1v1.1l0.1,1.1c2.3,34,3.4,69.3,3.4,104.9v0v0    c0.1,35.6-1.1,70.9-3.4,104.9l-0.1,1.1v1.1c0,13.8-4.7,26.6-13.4,36.1c-7.8,8.6-18,13.4-28.6,13.4h-0.8l-0.8,0    c-52.9,2.5-108.8,3.8-166.4,3.8c-3.5,0-7.1,0-10.6,0H256h-0.1c-3.6,0-7.2,0-10.8,0c-57.8,0-113.7-1.3-166.2-3.7l-0.8,0h-0.8    c-10.6,0-20.7-4.8-28.5-13.4c-8.6-9.5-13.4-22.3-13.4-36.1v-1.1l-0.1-1.1c-2.4-34.1-3.5-69.4-3.3-104.7v-0.1v-0.1    c-0.1-35.3,1-70.5,3.3-104.6l0.1-1.1v-1.1c0-27.2,18.8-49.3,41.9-49.3H78l0.7,0c49.5-2.3,102.9-3.3,168.2-3.3h9H265 M265,64    c-3,0-6,0-9,0s-6,0-9,0c-57.6,0-114.2,0.8-169.6,3.3c-40.8,0-73.9,36.3-73.9,81.3C1,184.4-0.1,220,0,255.7    c-0.1,35.7,0.9,71.3,3.4,107c0,45,33.1,81.6,73.9,81.6c54.8,2.6,110.7,3.8,167.8,3.8c3.6,0,7.3,0,10.9,0c3.6,0,7.2,0,10.7,0    c57.1,0,113-1.2,167.9-3.8c40.9,0,74-36.6,74-81.6c2.4-35.7,3.5-71.4,3.4-107.1c0.1-35.7-1-71.3-3.4-107.1c0-45-33.1-81.1-74-81.1    C379.2,64.8,322.7,64,265,64L265,64z"/>
+                                </g>
+                                <g>
+                                    <path d="M207,353.8V157.4l145,98.2L207,353.8z"/>
+                                </g>
+                            </g>
+                        </svg>
+                    </a>
+                    <a href="https://www.snapchat.com/add/sympletunes" target="_blank">
+                        <?xml version="1.0" ?>
+                        <svg viewBox="0 0 512 512" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg">
+                           <title>Snapchat</title>
+                            <path d="M496.926,366.6c-3.373-9.176-9.8-14.086-17.112-18.153-1.376-.806-2.641-1.451-3.72-1.947-2.182-1.128-4.414-2.22-6.634-3.373-22.8-12.09-40.609-27.341-52.959-45.42a102.889,102.889,0,0,1-9.089-16.12c-1.054-3.013-1-4.724-.248-6.287a10.221,10.221,0,0,1,2.914-3.038c3.918-2.591,7.96-5.22,10.7-6.993,4.885-3.162,8.754-5.667,11.246-7.44,9.362-6.547,15.909-13.5,20-21.278a42.371,42.371,0,0,0,2.1-35.191c-6.2-16.318-21.613-26.449-40.287-26.449a55.543,55.543,0,0,0-11.718,1.24c-1.029.224-2.059.459-3.063.72.174-11.16-.074-22.94-1.066-34.534-3.522-40.758-17.794-62.123-32.674-79.16A130.167,130.167,0,0,0,332.1,36.443C309.515,23.547,283.91,17,256,17S202.6,23.547,180,36.443a129.735,129.735,0,0,0-33.281,26.783c-14.88,17.038-29.152,38.44-32.673,79.161-.992,11.594-1.24,23.435-1.079,34.533-1-.26-2.021-.5-3.051-.719a55.461,55.461,0,0,0-11.717-1.24c-18.687,0-34.125,10.131-40.3,26.449a42.423,42.423,0,0,0,2.046,35.228c4.105,7.774,10.652,14.731,20.014,21.278,2.48,1.736,6.361,4.24,11.246,7.44,2.641,1.711,6.5,4.216,10.28,6.72a11.054,11.054,0,0,1,3.3,3.311c.794,1.624.818,3.373-.36,6.6a102.02,102.02,0,0,1-8.94,15.785c-12.077,17.669-29.363,32.648-51.434,44.639C32.355,348.608,20.2,352.75,15.069,366.7c-3.868,10.528-1.339,22.506,8.494,32.6a49.137,49.137,0,0,0,12.4,9.387,134.337,134.337,0,0,0,30.342,12.139,20.024,20.024,0,0,1,6.126,2.741c3.583,3.137,3.075,7.861,7.849,14.78a34.468,34.468,0,0,0,8.977,9.127c10.019,6.919,21.278,7.353,33.207,7.811,10.776.41,22.989.881,36.939,5.481,5.778,1.91,11.78,5.605,18.736,9.92C194.842,480.951,217.707,495,255.973,495s61.292-14.123,78.118-24.428c6.907-4.24,12.872-7.9,18.489-9.758,13.949-4.613,26.163-5.072,36.939-5.481,11.928-.459,23.187-.893,33.206-7.812a34.584,34.584,0,0,0,10.218-11.16c3.434-5.84,3.348-9.919,6.572-12.771a18.971,18.971,0,0,1,5.753-2.629A134.893,134.893,0,0,0,476.02,408.71a48.344,48.344,0,0,0,13.019-10.193l.124-.149C498.389,388.5,500.708,376.867,496.926,366.6Zm-34.013,18.277c-20.745,11.458-34.533,10.23-45.259,17.137-9.114,5.865-3.72,18.513-10.342,23.076-8.134,5.617-32.177-.4-63.239,9.858-25.618,8.469-41.961,32.822-88.038,32.822s-62.036-24.3-88.076-32.884c-31-10.255-55.092-4.241-63.239-9.858-6.609-4.563-1.24-17.211-10.341-23.076-10.739-6.907-24.527-5.679-45.26-17.075-13.206-7.291-5.716-11.8-1.314-13.937,75.143-36.381,87.133-92.552,87.666-96.719.645-5.046,1.364-9.014-4.191-14.148-5.369-4.96-29.189-19.7-35.8-24.316-10.937-7.638-15.748-15.264-12.2-24.638,2.48-6.485,8.531-8.928,14.879-8.928a27.643,27.643,0,0,1,5.965.67c12,2.6,23.659,8.617,30.392,10.242a10.749,10.749,0,0,0,2.48.335c3.6,0,4.86-1.811,4.612-5.927-.768-13.132-2.628-38.725-.558-62.644,2.84-32.909,13.442-49.215,26.04-63.636,6.051-6.932,34.484-36.976,88.857-36.976s82.88,29.92,88.931,36.827c12.611,14.421,23.225,30.727,26.04,63.636,2.071,23.919.285,49.525-.558,62.644-.285,4.327,1.017,5.927,4.613,5.927a10.648,10.648,0,0,0,2.48-.335c6.745-1.624,18.4-7.638,30.4-10.242a27.641,27.641,0,0,1,5.964-.67c6.386,0,12.4,2.48,14.88,8.928,3.546,9.374-1.24,17-12.189,24.639-6.609,4.612-30.429,19.343-35.8,24.315-5.568,5.134-4.836,9.1-4.191,14.149.533,4.228,12.511,60.4,87.666,96.718C468.629,373.011,476.119,377.524,462.913,384.877Z"/>
+                        </svg>
+                    </a>
+                    <a href="https://whatsapp.com\channel/0029Vb37B6PDp2Q4UxUhH20R" target="_blank">
+                        <?xml version="1.0" ?>
+                        <svg height="20px" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" viewBox="0 0 512 512" width="20px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:serif="http://www.serif.com/" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <title>Whatsapp</title>
+                            <path d="M373.295,307.064c-6.37,-3.188 -37.687,-18.596 -43.526,-20.724c-5.838,-2.126 -10.084,-3.187 -14.331,3.188c-4.246,6.376 -16.454,20.725 -20.17,24.976c-3.715,4.251 -7.431,4.785 -13.8,1.594c-6.37,-3.187 -26.895,-9.913 -51.225,-31.616c-18.935,-16.89 -31.72,-37.749 -35.435,-44.126c-3.716,-6.377 -0.397,-9.824 2.792,-13c2.867,-2.854 6.371,-7.44 9.555,-11.16c3.186,-3.718 4.247,-6.377 6.37,-10.626c2.123,-4.252 1.062,-7.971 -0.532,-11.159c-1.591,-3.188 -14.33,-34.542 -19.638,-47.298c-5.171,-12.419 -10.422,-10.737 -14.332,-10.934c-3.711,-0.184 -7.963,-0.223 -12.208,-0.223c-4.246,0 -11.148,1.594 -16.987,7.969c-5.838,6.377 -22.293,21.789 -22.293,53.14c0,31.355 22.824,61.642 26.009,65.894c3.185,4.252 44.916,68.59 108.816,96.181c15.196,6.564 27.062,10.483 36.312,13.418c15.259,4.849 29.145,4.165 40.121,2.524c12.238,-1.827 37.686,-15.408 42.995,-30.286c5.307,-14.882 5.307,-27.635 3.715,-30.292c-1.592,-2.657 -5.838,-4.251 -12.208,-7.44m-116.224,158.693l-0.086,0c-38.022,-0.015 -75.313,-10.23 -107.845,-29.535l-7.738,-4.592l-80.194,21.037l21.405,-78.19l-5.037,-8.017c-21.211,-33.735 -32.414,-72.726 -32.397,-112.763c0.047,-116.825 95.1,-211.87 211.976,-211.87c56.595,0.019 109.795,22.088 149.801,62.139c40.005,40.05 62.023,93.286 62.001,149.902c-0.048,116.834 -95.1,211.889 -211.886,211.889m180.332,-392.224c-48.131,-48.186 -112.138,-74.735 -180.335,-74.763c-140.514,0 -254.875,114.354 -254.932,254.911c-0.018,44.932 11.72,88.786 34.03,127.448l-36.166,132.102l135.141,-35.45c37.236,20.31 79.159,31.015 121.826,31.029l0.105,0c140.499,0 254.87,-114.366 254.928,-254.925c0.026,-68.117 -26.467,-132.166 -74.597,-180.352" id="WhatsApp-Logo"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.tiktok.com/@sympletunes" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                            <title>TikTok</title>
+                            <path d="M168,106a95.9,95.9,0,0,0,56,18V84a56,56,0,0,1-56-56H128V156a28,28,0,1,1-40-25.3V89.1A68,68,0,1,0,168,156Z" 
+                                  fill="none" stroke="var(--text-accent)" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                        </svg>
+                    </a>
+                    
+                    <a href="https://t.me/sympletunes" target="_blank" title="Go to SympleTunes Telegram">
+                        <svg width="20" height="20" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                            <title>Telegram</title>
+                            <path d="M88,134.9,177.9,214a8,8,0,0,0,13.1-4.2L228.6,45.6a8,8,0,0,0-10.7-9.2L33.3,108.9c-7.4,2.9-6.4,13.7,1.4,15.3Z" 
+                                  fill="none" stroke="var(--text-accent)" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+                            <line x1="88" y1="134.9" x2="224.1" y2="36.6" fill="none" stroke="var(--text-accent)" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+                            <path d="M132.9,174.4l-31.2,31.2A8,8,0,0,1,88,200V134.9" 
+                                  fill="none" stroke="var(--text-accent)" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="legal-links">
+                    <a href="policy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <center>        <p>Designed by <a href="https://symtech-web.github.io/SymTech/" target="_blank">SymTech Web</a></p>
+        </center>
+    </footer>
+    <!-- Supabase & JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="supabase-client.js"></script>
+    <script src="main.js"></script>
+    <script type="text/javascript"> emailjs.init({ publicKey: "LDGI6DIUGQmqOntkK" }); </script> <!-- Update Key -->
+    <script src="artist-profile-form.js"></script> <!-- NEW Specific JS -->
+
+</body>
+</html>

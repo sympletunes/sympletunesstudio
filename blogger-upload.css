@@ -1,0 +1,351 @@
+/* ============================================= */
+/* Blogger Upload Page Styles                    */
+/* Leverages global.css & components.css for     */
+/* base colors, fonts, inputs, buttons.          */
+/* ============================================= */
+
+body.blogger-upload-page {
+    /* Background color will come from global.css body style or body.dashboard-page if similar */
+}
+
+.blogger-hub-content {
+    padding-top: calc(var(--header-height, 70px) + 2rem); /* Use CSS var for header height if defined */
+    padding-bottom: 3rem;
+}
+
+/* Form Container Styling */
+.form-container {
+    /* .glass-card applied in HTML handles background, border, shadow, radius */
+    padding: 2rem 2.5rem; /* Spacing inside the main form card */
+    margin-bottom: 3rem;
+}
+.form-header-inline {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem; /* Reduced from 2rem */
+    padding-bottom: 1.25rem; /* Increased padding */
+    border-bottom: 1px solid var(--border-color);
+}
+.form-header-inline .form-icon {
+    color: var(--text-accent);
+    /* fa-2x already applied for size */
+}
+.form-header-inline .page-title {
+    margin-bottom: 0;
+    font-size: 1.8rem;
+    color: var(--text-primary); /* From global */
+}
+#article-form-subtitle {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    color: var(--text-secondary); /* From global */
+}
+
+#news-article-form fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 2.5rem 0;
+}
+#news-article-form fieldset:last-of-type {
+    margin-bottom: 1.5rem;
+}
+/* Form Section Title (reusing component style if possible, or define here) */
+#news-article-form .form-section-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(var(--border-color-rgb), 0.3); /* Lighter border */
+    display: flex;
+    align-items: center;
+}
+#news-article-form .form-section-title i {
+    margin-right: 0.75rem;
+    color: var(--text-accent);
+    font-size: 1.1em; /* Relative to title */
+}
+
+/* Form Input, Label, Select should inherit from components.css */
+/* .form-input, .form-select, .form-textarea from components.css */
+/* .form-group label from components.css */
+
+/* Specific layout for blogger form */
+#news-article-form .form-grid-2col { /* Defined in artist-profile-form.css or here */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+}
+@media (min-width: 600px) {
+    #news-article-form .form-grid-2col {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Checkbox Options Grid for Tags/Categories if used differently */
+/* .checkbox-options-grid (if different from artist-profile) */
+
+/* File Upload Specifics */
+#news-article-form .image-preview-container { /* Used for cover image */
+    width: 100%;
+    max-width: 300px; /* Adjust as needed */
+    height: 160px; /* Adjust aspect ratio */
+    border: 2px dashed var(--border-color);
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.5rem;
+    background-color: rgba(var(--bg-primary-rgb), 0.5); /* From global, slightly transparent */
+    overflow: hidden;
+}
+#news-article-form .image-preview-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+/* .form-input-file is globally hidden, label acts as button */
+/* .remove-image-btn uses .btn .btn-secondary .btn-small from components.css */
+
+.file-list-preview-ui.bordered-list {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    padding: 0.75rem;
+    min-height: 60px;
+    margin-top: 0.5rem;
+    background-color: rgba(var(--bg-primary-rgb), 0.5);
+}
+.file-list-preview-ui .no-files-note {
+    font-style: italic;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 1rem 0;
+}
+/* File preview item structure and base styles from components.css or defined here if unique */
+.file-preview-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.6rem 0.8rem;
+    background-color: var(--bg-primary); /* Slightly darker than list bg */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 0.5rem; font-size: 0.9rem;
+}
+.file-preview-item .file-info { flex-grow: 1; margin-right: 1rem; }
+.file-preview-item .file-icon { margin-right: 0.5rem; color: var(--text-accent); }
+.file-preview-item .file-name { font-weight: 500; color: var(--text-primary); }
+.file-preview-item .file-size { font-size: 0.8rem; color: var(--text-secondary); margin-left: 0.5rem; }
+.file-preview-item .remove-file-btn { /* Uses .btn-icon base if possible or simple style */
+    background: none; border: none; color: #dc3545; /* Using direct color for delete */
+    cursor: pointer; font-size: 1.1rem; padding: 0.25rem;
+}
+.file-preview-item .view-file-link {
+    font-size: 0.8rem;
+    color: var(--text-accent);
+    margin-left: 0.5rem;
+    text-decoration: none;
+}
+.file-preview-item .view-file-link:hover { text-decoration: underline; }
+.file-preview-item.existing-file .file-note {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-left: auto; /* Push to the right if space */
+}
+
+
+/* Quill Editor Styling (if used, keep variables consistent) */
+/* Example of theming Quill with CSS variables */
+/* .ql-toolbar.ql-snow {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
+    background-color: rgba(var(--bg-primary-rgb), 0.7);
+}
+.ql-toolbar.ql-snow .ql-picker-label,
+.ql-toolbar.ql-snow .ql-picker-item {
+    color: var(--text-secondary);
+}
+.ql-toolbar.ql-snow .ql-stroke { stroke: var(--text-secondary); }
+.ql-toolbar.ql-snow .ql-fill { fill: var(--text-secondary); }
+.ql-toolbar.ql-snow .ql-active .ql-stroke { stroke: var(--text-accent); }
+.ql-toolbar.ql-snow .ql-active .ql-fill { fill: var(--text-accent); }
+
+.ql-container.ql-snow {
+    border: 1px solid var(--border-color);
+    border-top: none;
+    border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
+    background-color: var(--bg-input, #101016); Should match your global input bg
+    color: var(--text-primary);
+    min-height: 250px;
+    font-family: var(--font-family-main);
+    font-size: 0.95rem;
+}
+.ql-editor { padding: 1rem; }
+.ql-editor.ql-blank::before { color: var(--text-secondary); font-style: normal; opacity: 0.6; } */
+
+
+/* Form Note for Slug */
+#news-article-form .form-note { /* Base from components.css or define here */
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.3rem;
+}
+
+/* Status and Featured Checkbox alignment */
+#news-article-form .form-group.checkbox-group.inline-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem; /* Align with select box better */
+}
+#news-article-form .form-group.checkbox-group.inline-checkbox input[type="checkbox"] {
+    margin-right: 0;
+}
+#news-article-form .form-group.checkbox-group.inline-checkbox label {
+    margin-bottom: 0;
+    font-weight: normal;
+}
+
+/* Form Actions (uses .btn from components.css) */
+#news-article-form .form-actions {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end; /* Default to right */
+    gap: 0.75rem;
+}
+#news-article-form .form-actions #clear-article-form-btn {
+    margin-right: auto; /* Push clear button to the left */
+}
+#submit-article-btn i { margin-right: 0.5rem; }
+
+
+/* Articles List Area */
+#articles-list-section .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+#articles-list-section .section-title-sub { /* Reusing from dashboardpage.css if consistent */
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.5rem; /* Adjust size if needed for this context */
+}
+#articles-list-section .section-title-sub i {
+    color: var(--text-accent);
+}
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Card width */
+    gap: 1.75rem;
+}
+.status-message { /* For loading/no articles (from dashboardpage.css if consistent) */
+    grid-column: 1 / -1; text-align: center; padding: 3rem 1rem;
+    font-size: 1rem; color: var(--text-secondary); font-style: italic;
+}
+
+/* Article Card Styling */
+.article-card-item {
+    /* .glass-card applied in HTML */
+    display: flex; flex-direction: column;
+    text-decoration: none;
+    color: var(--text-primary); /* Default text color from global */
+    overflow: hidden;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+.article-card-item:hover { transform: translateY(-4px); /* box-shadow from .glass-card:hover */ }
+
+.article-card-cover {
+    width: 100%; height: 180px;
+    background-color: var(--bg-secondary); /* Placeholder color from global */
+    overflow: hidden;
+}
+.article-card-cover img { width: 100%; height: 100%; object-fit: cover; }
+
+.article-card-info { padding: 1.25rem; flex-grow: 1; display: flex; flex-direction: column; }
+.article-card-info h3 {
+    font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    line-height: 1.3; overflow: hidden; text-overflow: ellipsis;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; min-height: 2.6em;
+}
+.article-card-meta {
+    font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;
+    display: flex; flex-wrap: wrap; gap: 0.3rem 1rem;
+}
+.article-card-meta span i { margin-right: 0.3rem; color: var(--text-accent); }
+.article-card-summary {
+    font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;
+    margin-bottom: 1rem; overflow: hidden; text-overflow: ellipsis;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+    flex-grow: 1;
+}
+.article-card-status {
+    display: inline-block; font-size: 0.75rem; font-weight: 500;
+    padding: 0.2rem 0.5rem; border-radius: var(--border-radius-sm);
+    margin-bottom: 1rem; align-self: flex-start;
+    /* Colors defined by specific status class */
+}
+/* Status colors (can be centralized in components.css if used elsewhere) */
+.article-card-status.draft { background-color: rgba(108, 117, 125, 0.2); color: #6c757d; border: 1px solid rgba(108,117,125,0.3); }
+.article-card-status.published { background-color: rgba(25, 135, 84, 0.2); color: #198754; border: 1px solid rgba(25,135,84,0.3); }
+.article-card-status.scheduled { background-color: rgba(13, 202, 240, 0.2); color: #0dcaf0; border: 1px solid rgba(13,202,240,0.3); }
+
+.article-card-actions { /* Uses .btn-icon from components.css */
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem; margin-top: 1rem;
+    display: flex; gap: 0.5rem; justify-content: flex-end;
+}
+
+
+/* Toast Notification (from components.css or global.css if used globally) */
+/* .toast styles already provided, ensure they use global CSS variables for colors */
+.toast {
+    /* ... existing styles ... */
+    background-color: var(--bg-secondary); /* Example */
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+.toast.success { border-left-color: #198754; /* Or use a CSS variable for success color */ }
+.toast.error { border-left-color: #dc3545; /* Or use a CSS variable for error color */ }
+.toast.info { border-left-color: #0dcaf0; /* Or use a CSS variable for info color */ }
+.toast-close-btn { color: var(--text-secondary); }
+.toast-close-btn:hover { color: var(--text-primary); }
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-container { padding: 1.5rem; }
+    #news-article-form .form-grid-2col { grid-template-columns: 1fr; }
+    .articles-grid { grid-template-columns: 1fr; } /* Stack article cards */
+}
+
+.form-feedback-message {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  display: none;
+}
+.form-feedback-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+.form-feedback-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+.form-feedback-message.info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
