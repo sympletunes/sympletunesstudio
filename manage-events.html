@@ -136,7 +136,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="event-country">Country *</label>
-                                        <select id="signup-country" name="country" class="form-input" required>
+                        <select id="event-country" name="country" class="form-input" required>
                             <option value="">Select Country...</option>
                             <option value="AF">Afghanistan</option>
                             <option value="AL">Albania</option>
@@ -348,18 +348,34 @@
                                     <label for="event-ticket-link">Ticket Purchase Link</label>
                                     <input type="url" id="event-ticket-link" name="ticket_link" class="form-input" placeholder="https://yourticketprovider.com/event">
                                 </div>
-                                <div class="form-group">
-                                    <label for="event-poster-input">Event Poster/Flyer (Recommended: 1080x1350px, JPG/PNG, max 2MB)</label>
-                                    <input type="file" id="event-poster-input" name="poster_file" class="form-input-file" accept="image/jpeg, image/png">
-                                    <div class="image-preview-container poster-preview"><img id="event-poster-preview" src="profile-picture.png" alt="Poster Preview"></div>
-                                    <button type="button" class="btn btn-secondary btn-small remove-image-btn" data-target="event-poster-preview" data-input="event-poster-input" style="display:none;">Remove Poster</button>
-                                </div>
-                                <div class="form-group">
-                                    <label for="event-cover-input">Event Cover Image (Optional: Wide banner, 1600x400px)</label>
-                                    <input type="file" id="event-cover-input" name="cover_file" class="form-input-file" accept="image/jpeg, image/png">
-                                    <div class="image-preview-container cover-preview"><img id="event-cover-preview" src="cover-photo.png" alt="Cover Preview"></div>
-                                    <button type="button" class="btn btn-secondary btn-small remove-image-btn" data-target="event-cover-preview" data-input="event-cover-input" style="display:none;">Remove Cover</button>
-                                </div>
+                               <div class="form-group">
+  <label for="event-poster-input">Event Poster/Flyer (Recommended: 1080x1350px, JPG/PNG, max 2MB)</label>
+  <input type="file" id="event-poster-input" name="poster_file" class="form-input-file" accept="image/jpeg, image/png">
+  <div class="image-preview-container poster-preview">
+    <img id="event-poster-preview" src="profile-picture.png" alt="Poster Preview">
+  </div>
+  <button type="button" class="btn btn-secondary btn-small remove-image-btn" data-target="event-poster-preview" data-input="event-poster-input" style="display:none;">Remove Poster</button>
+</div>
+
+<div class="form-group">
+  <label for="event-poster-link">Or paste a Poster Image URL</label>
+  <input type="url" id="event-poster-link" name="poster_link" class="form-input" placeholder="https://example.com/poster.jpg">
+</div>
+
+<div class="form-group">
+  <label for="event-cover-input">Event Cover Image (Optional: Wide banner, 1600x400px)</label>
+  <input type="file" id="event-cover-input" name="cover_file" class="form-input-file" accept="image/jpeg, image/png">
+  <div class="image-preview-container cover-preview">
+    <img id="event-cover-preview" src="cover-photo.png" alt="Cover Preview">
+  </div>
+  <button type="button" class="btn btn-secondary btn-small remove-image-btn" data-target="event-cover-preview" data-input="event-cover-input" style="display:none;">Remove Cover</button>
+</div>
+
+<div class="form-group">
+  <label for="event-cover-link">Or paste a Cover Image URL</label>
+  <input type="url" id="event-cover-link" name="cover_link" class="form-input" placeholder="https://example.com/cover.jpg">
+</div>
+
                             </fieldset>
 
                             <fieldset>
