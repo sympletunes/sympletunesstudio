@@ -500,25 +500,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                if (!skipPictures && profilePicInput.files[0]) {
-                    const profileFile = profilePicInput.files[0];
-                    const profileFileName = `public/${userIdToUse}/profile-${Date.now()}-${profileFile.name.replace(/\s+/g, '_')}`;
-                    const { data: uploadDataP, error: uploadErrorP } = await supabase.storage
-                        .from('profile-pictures').upload(profileFileName, profileFile, { upsert: true });
-                    if (uploadErrorP) throw new Error(`Profile pic upload: ${uploadErrorP.message}`);
-                    const { data: urlDataP } = supabase.storage.from('profile-pictures').getPublicUrl(uploadDataP.path);
-                    profilePicUrl = urlDataP.publicUrl;
-                }
+             if (!skipPictures && profilePicInput.files[0]) {
+    const profileFile = profilePicInput.files[0];
+    const profileFileName = `public/${userIdToUse}/profile-${Date.now()}-${profileFile.name.replace(/\s+/g, '_')}`;
+    const { data: uploadDataP, error: uploadErrorP } = await supabase.storage
+        .from('profile-pics').upload(profileFileName, profileFile, { upsert: true });
+    if (uploadErrorP) throw new Error(`Profile pic upload: ${uploadErrorP.message}`);
+    const { data: urlDataP } = supabase.storage.from('profile-pics').getPublicUrl(uploadDataP.path);
+    profilePicUrl = urlDataP.publicUrl;
+}
 
-                if (!skipPictures && coverPicInput.files[0]) {
-                    const coverFile = coverPicInput.files[0];
-                    const coverFileName = `public/${userIdToUse}/cover-${Date.now()}-${coverFile.name.replace(/\s+/g, '_')}`;
-                    const { data: uploadDataC, error: uploadErrorC } = await supabase.storage
-                        .from('cover-pictures').upload(coverFileName, coverFile, { upsert: true });
-                    if (uploadErrorC) throw new Error(`Cover pic upload: ${uploadErrorC.message}`);
-                    const { data: urlDataC } = supabase.storage.from('cover-pictures').getPublicUrl(uploadDataC.path);
-                    coverPicUrl = urlDataC.publicUrl;
-                }
+if (!skipPictures && coverPicInput.files[0]) {
+    const coverFile = coverPicInput.files[0];
+    const coverFileName = `public/${userIdToUse}/cover-${Date.now()}-${coverFile.name.replace(/\s+/g, '_')}`;
+    const { data: uploadDataC, error: uploadErrorC } = await supabase.storage
+        .from('cover-pics').upload(coverFileName, coverFile, { upsert: true });
+    if (uploadErrorC) throw new Error(`Cover pic upload: ${uploadErrorC.message}`);
+    const { data: urlDataC } = supabase.storage.from('cover-pics').getPublicUrl(uploadDataC.path);
+    coverPicUrl = urlDataC.publicUrl;
+}
 
                 const profileToInsert = {
                     id: userIdToUse, role: signupData.role, first_name: signupData.first_name,
