@@ -40,6 +40,8 @@ const clearEventFormBtn = document.getElementById('clear-event-form-btn');
     const eventCoverPreview = document.getElementById('event-cover-preview');
     const eventContactEmailInput = document.getElementById('event-contact-email');
     const eventContactPhoneInput = document.getElementById('event-contact-phone');
+    const eventPosterLinkInput = document.getElementById('event-poster-link');
+    const eventCoverLinkInput = document.getElementById('event-cover-link');
 
     // Header elements
     const headerProfilePic = document.getElementById('header-profile-pic');
@@ -206,28 +208,59 @@ const clearEventFormBtn = document.getElementById('clear-event-form-btn');
         window.scrollTo({ top: eventForm.offsetTop - 80, behavior: 'smooth' }); // Scroll to form
     }
 
-    // --- Event Listeners Setup ---
-    function setupEventListeners() {
-        // No open modal button now, form is always visible for create/edit
-        if (eventTicketRequiredCheckbox && ticketLinkGroup) { /* ... same ... */ }
-        if (eventPosterInput) eventPosterInput.addEventListener('change', () => previewFile(eventPosterInput, eventPosterPreview, 'poster'));
-        if (eventCoverInput) eventCoverInput.addEventListener('change', () => previewFile(eventCoverInput, eventCoverPreview, 'cover'));
-        document.querySelectorAll('.remove-image-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const targetPreviewId = btn.dataset.target;
-                const targetInputId = btn.dataset.input;
-                clearImagePreview(targetPreviewId, targetInputId, targetPreviewId.includes('poster') ? 'poster' : 'cover');
-                btn.style.display = 'none';
-            });
+ // --- Event Listeners Setup ---
+function setupEventListeners() {
+    // No open modal button now, form is always visible for create/edit
+
+    if (eventTicketRequiredCheckbox && ticketLinkGroup) {
+        eventTicketRequiredCheckbox.addEventListener('change', () => {
+            ticketLinkGroup.style.display = eventTicketRequiredCheckbox.checked ? 'block' : 'none';
         });
-
-
-        if (eventForm) eventForm.addEventListener('submit', handleEventFormSubmit);
-        if (clearEventFormBtn) clearEventFormBtn.addEventListener('click', prepareFormForCreate); // Reset form to "Create New" state
-
-        if (logoutButton) logoutButton.addEventListener('click', handleLogout);
-        if (mobileLogoutButton) mobileLogoutButton.addEventListener('click', handleLogout);
     }
+
+    if (eventPosterInput) {
+        eventPosterInput.addEventListener('change', () => previewFile(eventPosterInput, eventPosterPreview, 'poster'));
+    }
+
+    if (eventCoverInput) {
+        eventCoverInput.addEventListener('change', () => previewFile(eventCoverInput, eventCoverPreview, 'cover'));
+    }
+
+    if (eventPosterLinkInput) {
+        eventPosterLinkInput.addEventListener('input', () => {
+            const url = eventPosterLinkInput.value.trim();
+            if (url && isValidImageUrl(url)) eventPosterPreview.src = url;
+        });
+    }
+
+    if (eventCoverLinkInput) {
+        eventCoverLinkInput.addEventListener('input', () => {
+            const url = eventCoverLinkInput.value.trim();
+            if (url && isValidImageUrl(url)) eventCoverPreview.src = url;
+        });
+    }
+
+    document.querySelectorAll('.remove-image-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetPreviewId = btn.dataset.target;
+            const targetInputId = btn.dataset.input;
+            clearImagePreview(targetPreviewId, targetInputId, targetPreviewId.includes('poster') ? 'poster' : 'cover');
+            btn.style.display = 'none';
+        });
+    });
+
+    if (eventForm) eventForm.addEventListener('submit', handleEventFormSubmit);
+    if (clearEventFormBtn) clearEventFormBtn.addEventListener('click', prepareFormForCreate); // Reset form to "Create New" state
+
+    if (logoutButton) logoutButton.addEventListener('click', handleLogout);
+    if (mobileLogoutButton) mobileLogoutButton.addEventListener('click', handleLogout);
+}
+
+// Helper function for validating image URLs
+function isValidImageUrl(url) {
+    return /\.(jpg|jpeg|png|webp|gif)$/i.test(url);
+}
+
 
     // --- File Handling ---
     function previewFile(fileInput, imgPreviewElement, type) {
@@ -261,8 +294,9 @@ const clearEventFormBtn = document.getElementById('clear-event-form-btn');
         event.preventDefault();
         // ... (Validation logic - same as before) ...
         if (!currentUser) { /* ... */ return; }
-        const requiredFieldsFilled = [eventNameInput, eventDescriptionInput, eventCategoryInput, eventDateInput, eventLocationInput, eventCityInput, eventCountryInput]
-            .every(input => input.value.trim() !== '');
+const requiredFieldsFilled = [eventNameInput, eventDescriptionInput, eventCategoryInput, eventDateInput, eventLocationInput, eventCityInput, eventCountryInput]
+  .every(input => input && input.value && input.value.trim() !== '');
+
         if (!requiredFieldsFilled) {
             displayFormMessage(eventForm, "Please fill in all required fields (*).", "error");
             return;
@@ -272,12 +306,32 @@ const clearEventFormBtn = document.getElementById('clear-event-form-btn');
         setLoadingState(submitEventBtn, true);
 
         try {
-            let posterUrlToSave = editingEventId ? userEventsGrid.querySelector(`.event-card-item[data-event-id="${editingEventId}"] img`)?.src : null; // Get current if editing
-            if (posterUrlToSave && posterUrlToSave.includes('image-placeholder.png')) posterUrlToSave = null; // If placeholder, don't keep
+           let posterUrlToSave = null;
+if (selectedPosterFile) {
+  const filePath = `events/${currentUser.id}/posters/${Date.now()}-${selectedPosterFile.name.replace(/\s+/g, '_')}`;
+  const { error } = await supabase.storage.from('event-media').upload(filePath, selectedPosterFile, { upsert: true });
+  if (error) throw new Error(`Poster upload failed: ${error.message}`);
+  posterUrlToSave = supabase.storage.from('event-media').getPublicUrl(filePath).data.publicUrl;
+} else if (eventPosterLinkInput?.value?.trim() !== '') {
+  posterUrlToSave = eventPosterLinkInput.value.trim();
+} else if (editingEventId) {
+  posterUrlToSave = userEventsGrid.querySelector(`.event-card-item[data-event-id="${editingEventId}"] img`)?.src || null;
+  if (posterUrlToSave && posterUrlToSave.includes('image-placeholder.png')) posterUrlToSave = null;
+}
 
-            let coverUrlToSave = editingEventId ? (await supabase.from('events').select('cover_url').eq('id', editingEventId).single()).data?.cover_url : null;
-             if (coverUrlToSave && coverUrlToSave.includes('cover-placeholder.png')) coverUrlToSave = null;
-
+     let coverUrlToSave = null;
+if (selectedCoverFile) {
+  const filePath = `events/${currentUser.id}/covers/${Date.now()}-${selectedCoverFile.name.replace(/\s+/g, '_')}`;
+  const { error } = await supabase.storage.from('event-media').upload(filePath, selectedCoverFile, { upsert: true });
+  if (error) throw new Error(`Cover image upload failed: ${error.message}`);
+  coverUrlToSave = supabase.storage.from('event-media').getPublicUrl(filePath).data.publicUrl;
+} else if (eventCoverLinkInput?.value?.trim() !== '') {
+  coverUrlToSave = eventCoverLinkInput.value.trim();
+} else if (editingEventId) {
+  const { data } = await supabase.from('events').select('cover_url').eq('id', editingEventId).single();
+  coverUrlToSave = data?.cover_url || null;
+  if (coverUrlToSave && coverUrlToSave.includes('cover-placeholder.png')) coverUrlToSave = null;
+}
 
             // 1. Upload Poster if a new one is selected
             if (selectedPosterFile) {
