@@ -3,65 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SympleTunes Studio | Music & Podcasts for Creators and Advertisers</title>
+    <title>SympleTunes Studio | Music & Podcasts for Creators and Advertisers</title>
+    
+    <!-- Google Site Verification -->
     <meta name="google-site-verification" content="dVmX0HkQgC9jB3sl_qcHI59EJSd6B0wHAAROF1Kep4A" />
-   <meta name="description" content="Create and monetize music, podcasts, and events with SympleTunes Studio. Built for creators, brands, and advertisers.">
-<meta name="keywords" content="
-Symple Tunes, Symtech Web, Symple Tunes Studio, music platform, content creation, content monetization, upcoming musicians, independent artists, unsigned artists, podcast hosting, podcast promotion, podcast marketing, digital advertising, online advertising, advertisers, event organizers, event management, live music events, concert promotion, music marketing, artist promotion, music distribution, audio streaming platform, video podcasting, brand partnerships, creative community, music industry, music production, music publishing, music collaboration, audio content platform, multimedia content, social audio, digital music services, podcast networks, music discovery, music streaming, royalty-free music, indie musicians, music entrepreneurship, podcast monetization, influencer marketing, entertainment marketing, audio branding, online concerts, live streaming events
-">
+    
+    <!-- SEO -->
+    <meta name="description" content="Create and monetize music, podcasts, and events with SympleTunes Studio. Built for creators, brands, and advertisers.">
+    <meta name="keywords" content="Symple Tunes, Symple Tunes Studio, music platform, content creation, content monetization, upcoming musicians, independent artists, unsigned artists, podcast hosting, podcast promotion, podcast marketing, digital advertising, online advertising, advertisers, event organizers, event management, live music events, concert promotion, music marketing, artist promotion, music distribution, audio streaming platform, video podcasting, brand partnerships, creative community, music industry, music production, music publishing, music collaboration, audio content platform, multimedia content, social audio, digital music services, podcast networks, music discovery, music streaming, royalty-free music, indie musicians, music entrepreneurship, podcast monetization, influencer marketing, entertainment marketing, audio branding, online concerts, live streaming events">
+
     <!-- Open Graph -->
-<meta property="og:title" content="SympleTunes Studio - Empowering Creators. Fueling Culture.">
-<meta property="og:description" content="Create, publish, and monetize music, podcasts, and live events with SympleTunes — the modern media platform for creators and brands.">
-<meta property="og:url" content="https://symple-tunes.onrender.com">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://symple-tunes.onrender.com/og-preview.jpg"> <!-- optional, for thumbnail -->
+    <meta property="og:title" content="SympleTunes Studio - Empowering Creators. Fueling Culture.">
+    <meta property="og:description" content="Create, publish, and monetize music, podcasts, and live events with SympleTunes — the modern media platform for creators and brands.">
+    <meta property="og:url" content="https://sympletunes.github.io/sympletunesstudio/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://sympletunes.github.io/sympletunesstudio/og-preview.jpg"> <!-- Update if you have a preview image -->
 
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="SympleTunes Studio">
-<meta name="twitter:description" content="Create, share, and grow with SympleTunes Studio.">
-<meta name="twitter:image" content="https://symple-tunes.onrender.com/og-preview.jpg"> <!-- optional -->
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SympleTunes Studio">
+    <meta name="twitter:description" content="Create, share, and grow with SympleTunes Studio.">
+    <meta name="twitter:image" content="https://sympletunes.github.io/sympletunesstudio/og-preview.jpg">
 
-    <!-- Favicon (replace with your actual favicon path) -->
+    <!-- Canonical (Very Important) -->
+    <link rel="canonical" href="https://sympletunes.github.io/sympletunesstudio/" />
+
+    <!-- Favicon -->
     <link rel="icon" href="favicon.png" type="image/x-icon">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-    <!-- CSS Stylesheets -->
-    <link rel="stylesheet" href="global.css">         <!-- Base styles, variables, dark theme -->
-    <link rel="stylesheet" href="layout.css">         <!-- Header, footer, main layout containers -->
-    <link rel="stylesheet" href="components.css">     <!-- Buttons, cards, forms, modals -->
-    <link rel="stylesheet" href="glassmorphism.css">  <!-- Glass effect styles -->
-    <link rel="stylesheet" href="homepage.css">       <!-- Styles specific to the homepage -->
-    <link rel="stylesheet" href="responsive.css">     <!-- Media queries for responsiveness -->
-    <link rel="stylesheet" href="dashboardpage.css">     <!-- Dashboard styles (if applicable) -->
-    <link rel="canonical" href="https://sympletunesstudio.onrender.com/" />
-    <!-- Preconnect for Google Fonts (if using them directly from Google) -->
+    <!-- CSS -->
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="glassmorphism.css">
+    <link rel="stylesheet" href="homepage.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="dashboardpage.css">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-/..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Supabase & JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="supabase-client.js"></script>
     <script type="module" src="auth-ui-handler.js"></script>
+
+    <!-- Schema -->
     <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "SympleTunes Studio",
-  "url": "https://sympletunesstudio.onrender.com/",
-  "logo": "https://sympletunesstudio.onrender.com/logo.png",
-  "description": "SympleTunes Studio helps creators, podcasters, musicians, and advertisers publish and monetize content.",
-  "sameAs": [
-  "https://www.instagram.com/sympletunes/",
-  "https://twitter.com/SympleTunes",
-  "https://web.facebook.com/profile.php?id=61567149111821",
-  "https://whatsapp.com/channel/0029Vb37B6PDp2Q4UxUhH20R"
-]
-
-}
-</script>
-
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "SympleTunes Studio",
+      "url": "https://sympletunes.github.io/sympletunesstudio/",
+      "logo": "https://sympletunes.github.io/sympletunesstudio/logo.png",
+      "description": "SympleTunes Studio helps creators, podcasters, musicians, and advertisers publish and monetize content.",
+      "sameAs": [
+        "https://www.instagram.com/sympletunes/",
+        "https://twitter.com/SympleTunes",
+        "https://web.facebook.com/profile.php?id=61567149111821",
+        "https://whatsapp.com/channel/0029Vb37B6PDp2Q4UxUhH20R"
+      ]
+    }
+    </script>
 </head>
+
 <body>
   <!-- Universal Header -->
 <header class="main-header glass-nav sticky-header">
