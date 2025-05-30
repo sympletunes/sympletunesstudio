@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sympletunes.github.io/sympletunesstudio/sitemap.xml
